@@ -1,0 +1,1 @@
+worker: ./spsmcollector-cli heroku

@@ -1,0 +1,1 @@
+./spsmcollector-cli force-start

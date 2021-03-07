@@ -1,0 +1,6 @@
+image: gitpod/workspace-full
+
+vscode:
+  extensions:
+    - donjayamanne.githistory@0.6.6:vlV6gxpYnSRT5swgXtbcWg==
+    - eamodio.gitlens@10.2.1:WIWu3zHU4VPT8r/v866LUw==
