@@ -26,12 +26,12 @@ if ENV:
     HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME")
     RAW_Skynet = os.environ.get("Skynet", "")
     RAW_ENFORCERS = os.environ.get("ENFORCERS", "")
-    Skynet = list(int(x) for x in os.environ.get("Skynet", "").split())
+    SKYNET = list(int(x) for x in os.environ.get("Skynet", "").split())
     INSPECTORS = list(int(x) for x in os.environ.get("INSPECTORS", "").split())
     ENFORCERS = list(int(x) for x in os.environ.get("ENFORCERS", "").split())
     MONGO_DB_URL = os.environ.get("MONGO_DB_URL")
     Skynet_logs = int(os.environ.get("Skynet_logs"))
-    Skynet_approved_logs = int(os.environ.get("Skynet_Approved_Logs"))
+    Skynet_approved_logs = int(os.environ.get("Skynet_approved_logs"))
     GBAN_MSG_LOGS = int(os.environ.get("GBAN_MSG_LOGS"))
     BOT_TOKEN = os.environ.get("BOT_TOKEN")
 else:
@@ -41,9 +41,9 @@ else:
     API_HASH_KEY = Config.API_HASH
     STRING_SESSION = Config.STRING_SESSION
     MONGO_DB_URL = Config.MONGO_DB_URL
-    with open(os.path.join(os.getcwd(), "Skynet_System/elevated_users.json"), "r") as f:
+    with open(os.path.join(os.getcwd(), "Skynet_System\\elevated_users.json"), "r") as f:
         data = json.load(f)
-    Skynet = data["Skynet"]
+    SKYNET = data["Skynet"]
     ENFORCERS = data["ENFORCERS"]
     INSPECTORS = data["INSPECTORS"]
     Skynet_logs = Config.Skynet_logs
@@ -117,7 +117,7 @@ def system_cmd(
     elif allow_inspectors and allow_Skynet:
         args["from_users"] = INSPECTORS
     else:
-        args["from_users"] = Skynet
+        args["from_users"] = SKYNET
     if force_reply:
         args["func"] = lambda e: e.is_reply
     return events.NewMessage(**args)
