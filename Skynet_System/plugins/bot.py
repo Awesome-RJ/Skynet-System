@@ -1,7 +1,7 @@
-from Sibyl_System import System, session, DEVELOPERS, MANAGERS, Sibyl_logs
-from Sibyl_System.strings import proof_string, scan_request_string, reject_string
-from Sibyl_System.plugins.Mongo_DB.gbans import get_gban, get_gban_by_proofid
-import Sibyl_System.plugins.Mongo_DB.bot_settings as db
+from Skynet_System import System, session, INSPECTORS, ENFORCERS, Skynet_logs
+from Skynet_System.strings import proof_string, scan_request_string, reject_string
+from Skynet_System.plugins.Mongo_DB.gbans import get_gban, get_gban_by_proofid
+import Skynet_System.plugins.Mongo_DB.bot_settings as db
 
 from telethon import events, custom
 
@@ -125,7 +125,7 @@ async def callback_handler(event):
                 dict_["reason"] = r.message
                 data[index] = dict_
             msg = f"New Reason:\nU_ID: {dict_['u_id']}\n"
-            msg += f"Manager: {dict_['manager']}\n"
+            msg += f"Enforcer: {dict_['enforcer']}\n"
             msg += f"Source: {dict_['source']}\n"
             msg += f"Reason: {dict_['reason']}\n"
             msg += f"Message: {dict_['message']}\n"
@@ -150,9 +150,9 @@ async def inline_handler(event):
     builder = event.builder
     query = event.text
     split = query.split(" ", 1)
-    if event.query.user_id not in DEVELOPERS:
+    if event.query.user_id not in INSPECTORS:
         result = builder.article(
-            "Sibyl System", text="You don't have access to this cmd."
+            "Skynet System", text="You don't have access to this cmd."
         )
         await event.answer([result])
         return
@@ -174,10 +174,10 @@ async def inline_handler(event):
         if len(split) != 5:
             result = builder.article("Not enough info provided...")
         else:
-            u_id, manager, source, reason, message = split
+            u_id, enforcer, source, reason, message = split
             dict_ = {
                 "u_id": u_id,
-                "manager": manager,
+                "enforcer": enforcer,
                 "source": source,
                 "reason": reason,
                 "message": message,
@@ -193,7 +193,7 @@ async def inline_handler(event):
             result = builder.article(
                 "Output",
                 text=scan_request_string.format(
-                    manager=manager,
+                    enforcer=enforcer,
                     spammer=u_id,
                     reason=reason,
                     chat=source,
@@ -205,7 +205,7 @@ async def inline_handler(event):
     else:
         result = builder.article(
             "No type provided",
-            text="Use\nproof <user_id> to get proof\nbuilder id:::manager:::source:::reason:::message",
+            text="Use\nproof <user_id> to get proof\nbuilder id:::enforcer:::source:::reason:::message",
         )
     await event.answer([result])
 
@@ -255,7 +255,7 @@ async def check_user(event):
                     msg += "I can't ban users here, Changed mode to `warn`"
                     await db.change_settings(event.chat_id, True, "warn")
             await event.respond(msg)
-    elif user.id in DEVELOPERS or user.id in MANAGERS:
+    elif user.id in INSPECTORS or user.id in ENFORCERS:
         return
     else:
         u = await get_gban(user.id)

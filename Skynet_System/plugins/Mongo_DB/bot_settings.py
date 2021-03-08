@@ -1,7 +1,7 @@
-from Sibyl_System import MONGO_CLIENT
+from Skynet_System import MONGO_CLIENT
 from typing import Optional, Dict, Union
 
-db = MONGO_CLIENT["SibylSystemRobot"]["Main"]
+db = MONGO_CLIENT["SkynetSystemRobot"]["Main"]
 
 async def get_chat(chat: int) -> Optional[Dict[str, Union[str, int]]]:
     settings = await db.find_one({'chat_id': chat})

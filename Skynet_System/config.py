@@ -18,26 +18,26 @@
 
 # Telegram API Info
 # Replace placeholders with your own values. For sting token, use the sting session generator script.
-API_ID = 123456
-API_HASH = "YourApiHashHere"
-STRING_SESSION = "YourSessionStringHere"
-BOT_TOKEN = "YourBotAPITokenHere"
+API_ID = 2147833
+API_HASH = "75aaffe84071e6ceb7ab4e07b4a4a266"
+STRING_SESSION = "1BVtsOLUBu2GXIsLKUGTZkSgwO0AEeBcEPWmsPCPFZyZnstFNn1ltw64jD2h4MqMQxHGh_8NeJuZx5h0fW5gMg8s-4IBlz6Vw2Ks_-ttOKn7jPzdL70MbxKAlCfFwh3r_4WNIasUkineZxi7IL4qu5mmQjVWBdJYwjH-TauiLgd13MWrAy9XqT0kqyP2uG7Cw0BGAGyKKFXOzhiLUg-raH7wwcDWxxMZKhSrRtJXJT9Ga3f0A9yx2OCIhAdHZUk9t2WbgWFnJfVBpqKUullUCBy18VVuxes60an-0nFMr9jD7fZ4buWUQTKqabYeJO6xcgkSVFvtVMXLe45oR53zqGrC1d8a7x-c="
+BOT_TOKEN = "1615719817:AAHqQZWGvFBXVW1lTnnkv4216aYs1wNuafk"
 
 # The MongoDB URL
 # Use the v3.4.x+ URL format. For 3.6.x+, make sure 'dnspython' is installed.
-MONGO_DB_URL = "mongodb://SSCUserbotApiRoot:password@localhost:27017/apiMain?ssl=true&replicaSet=SSC-Userbot-DB-shard-0&authSource=admin&retryWrites=true&w=majority"
+MONGO_DB_URL = "mongodb+srv://sybil_use:RPMvhLqJmKbCGq1x@cluster0.amty7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
 # These numbers below are real userids.
 # Replace it with your own userids. Or, remove everything and manually paste userids in JSON format.
-SIBYL = [709590349, 705519392, 652113804, 982858663]
-ENFORCERS = [276375010, 370663289, 660565862, 528781117, 596701090, 472245282, 394012198, 771130169, 321750518, 799678999, 615304572, 486514034, 367222759, 59038234, 256304538, 745191358, 570787098, 439595878, 596701090, 459034222, 971324495, 365085145, 677721265, 1096215023, 608750088, 962286971, 565218601, 731736814, 239556789, 669152898]
-INSPECTORS = [895373440, 792109647, 570787098, 615304572, 324460662, 425599267, 1045178534, 962286971, 591929714, 123006962, 808197325]
+SIBYL = [1418166549]
+ENFORCERS = [1324456]
+INSPECTORS = [1634756943]
 
 # These intergers below are real chatids.
 # Replace it with your own chatids or the userbot will not start.
-Sibyl_logs = -1001462662903
-Sibyl_approved_logs = -1001190992619
-GBAN_MSG_LOGS = -1001411763887
+Sibyl_logs = -1001274776877
+Sibyl_approved_logs = -1001274776877
+GBAN_MSG_LOGS = -1001293004442
 
 ########################################
 # IMPORTANT!                           #

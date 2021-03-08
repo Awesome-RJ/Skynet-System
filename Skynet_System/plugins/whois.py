@@ -1,5 +1,5 @@
 from telethon.tl.functions.users import GetFullUserRequest
-from Sibyl_System import System, system_cmd
+from Skynet_System import System, system_cmd
 
 
 @System.on(system_cmd(pattern=r"whois"))
@@ -31,6 +31,6 @@ help_plus = """ Here is Help for **Whois** -
 `whois` - get data of the user
 **Notes:**
 `/` `?` `.` `!` are supported prefixes.
-**Example:** `/addmng` or `?addmng` or `.addmng`
+**Example:** `/addenf` or `?addenf` or `.addenf`
 """
 __plugin_name__ = "whois"

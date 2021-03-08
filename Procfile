@@ -1,1 +1,1 @@
-worker: ./spsmcollector-cli heroku
+worker: python3 -m Skynet_System

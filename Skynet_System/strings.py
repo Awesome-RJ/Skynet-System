@@ -1,26 +1,26 @@
 on_string = """
-Connected to seed!
-Welcome {manager} {name}
-Your validity is successfully verified.
+Connection successful! 
+Welcome {Enforcer} {name}
+You are a valid user!
 """
 
 # Make sure not to change these too much
 # If you still wanna change it change the regex too
 scan_request_string = """
 $SCAN
-Cymatic Judge request!
-**Manager:** {manager} 
+Cymatic Scan request!
+**Enforcer:** {enforcer} 
 **User scanned:** {spammer}
 **Reason:** `{reason}`
-**Judge Source:** {chat}
+**Scan Source:** {chat}
 **Target Message:** `{message}`
 """
 forced_scan_string = """
 $FORCED
-**Developer:** {dev}
+**Inspector:** {ins}
 **Target:** {spammer}
 **Reason:** `{reason}`
-**Judge Source:** {chat}
+**Scan Source:** {chat}
 **Target Message:** `{message}`
 """
 
@@ -43,13 +43,13 @@ scan_approved_string = """
 **Target User:** {scam}
 **Crime Coefficient:** `Over 300`
 **Reason:** `{reason}`
-**Manager:** `{manager}`
+**Enforcer:** `{enforcer}`
 **Case Number:** `{proof_id}`
 """
 
 bot_gban_string = """
 #DestroyDecomposer
-**Manager:** `{manager}`
+**Enforcer:** `{enforcer}`
 **Target User:** {scam}
 **Reason:** `{reason}`
 """

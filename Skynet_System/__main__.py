@@ -1,12 +1,12 @@
-from Sibyl_System import (
+from Skynet_System import (
     System,
     system_cmd,
     make_collections,
-    DEVELOPERS,
-    MANAGERS,
-    Sibyl_logs,
+    INSPECTORS,
+    ENFORCERS,
+    Skynet_logs,
 )
-from Sibyl_System.strings import on_string
+from Skynet_System.strings import on_string
 import logging
 import importlib
 import asyncio
@@ -16,7 +16,7 @@ logging.basicConfig(
     format="[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s", level=logging.WARNING
 )
 
-from Sibyl_System.plugins import to_load
+from Skynet_System.plugins import to_load
 
 HELP = {}
 IMPORTED = {}
@@ -24,7 +24,7 @@ FAILED_TO_LOAD = {}
 
 for load in to_load:
     try:
-        imported = importlib.import_module("Sibyl_System.plugins." + load)
+        imported = importlib.import_module("Skynet_System.plugins." + load)
         if not hasattr(imported, "__plugin_name__"):
             imported.__plugin_name__ = imported.__name__
 
@@ -41,7 +41,7 @@ for load in to_load:
         print("------------------------------------")
 
 
-@System.on(system_cmd(pattern=r"status", allow_managers=True))
+@System.on(system_cmd(pattern=r"status", allow_enforcer=True))
 async def status(event):
     msg = await event.reply("Portable Psychological Diagnosis and Suppression System.")
     time.sleep(1)
@@ -62,15 +62,15 @@ async def status(event):
     await msg.edit("Connection successful!")
     time.sleep(2)
     sender = await event.get_sender()
-    user_status = "developer" if sender.id in DEVELOPERS else "Manager"
+    user_status = "Inspector" if sender.id in INSPECTORS else "Enforcer"
     time.sleep(1)
-    await msg.edit(on_string.format(manager=user_status, name=sender.first_name))
+    await msg.edit(on_string.format(Enforcer=user_status, name=sender.first_name))
 
 
-@System.on(system_cmd(pattern="cardinal stats"))
+@System.on(system_cmd(pattern="Skynet stats"))
 async def stats(event):
     msg = f"Processed {System.processed} messages since last restart."
-    msg += f"\n{len(MANAGERS)} Managers & {len(DEVELOPERS)} Developers"
+    msg += f"\n{len(ENFORCERS)} Enforcers & {len(INSPECTORS)} Inspectors"
     g = 0
     async for d in event.client.iter_dialogs(limit=None):
         if d.is_channel and not d.entity.broadcast:
@@ -81,7 +81,7 @@ async def stats(event):
     await event.reply(msg)
 
 
-@System.on(system_cmd(pattern=r"help", allow_slash=False, allow_developers=True))
+@System.on(system_cmd(pattern=r"help", allow_slash=False, allow_inspectors=True))
 async def send_help(event):
     try:
         help_for = event.text.split(" ", 1)[1].lower()
@@ -110,9 +110,9 @@ async def main():
         msg = "Few plugins failed to load:"
         for plugin in FAILED_TO_LOAD:
             msg += f"\n**{plugin}**\n\n`{FAILED_TO_LOAD[plugin]}`"
-        await System.send_message(Sibyl_logs, msg)
+        await System.send_message(Skynet_logs, msg)
     else:
-        await System.send_message(Sibyl_logs, "I'm up!")
+        await System.send_message(Skynet_logs, " Skynet! System in command!")
     await System.run_until_disconnected()
 
 

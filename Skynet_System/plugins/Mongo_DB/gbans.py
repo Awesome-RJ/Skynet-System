@@ -1,8 +1,8 @@
-from Sibyl_System import MONGO_CLIENT
+from Skynet_System import MONGO_CLIENT
 from typing import Optional, Dict, Union
 from datetime import datetime
 
-db = MONGO_CLIENT["Sibyl"]["Main"]
+db = MONGO_CLIENT["Skynet"]["Main"]
 
 
 async def get_gban(user: int) -> Optional[Dict[str, Union[str, int]]]:
@@ -24,7 +24,7 @@ async def update_gban(
     victim: int,
     reason: Optional[str] = None,
     proof_id: Optional[int] = None,
-    manager: Optional[int] = None,
+    enforcer: Optional[int] = None,
     message: Optional[str] = None,
 ) -> True:
     gbans_dict = await get_gban(victim)
@@ -34,7 +34,7 @@ async def update_gban(
         if proof_id:
             gbans_dict["proof_id"] = proof_id
         if enforcer:
-            gbans_dict["manager"] = manager
+            gbans_dict["enforcer"] = enforcer
         if message:
             gbans_dict["message"] = message
         gbans_dict["timestamp"] = datetime.timestamp(datetime.now())
@@ -43,7 +43,7 @@ async def update_gban(
         gbans_dict = {
             "user": victim,
             "reason": reason,
-            "manager": manager,
+            "enforcer": enforcer,
             "proof_id": proof_id,
             "message": message,
             "timestamp": datetime.timestamp(datetime.now()),
