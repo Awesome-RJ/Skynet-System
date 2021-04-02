@@ -46,8 +46,8 @@ else:
     SKYNET = data["SKYNET"]
     ENFORCERS = data["ENFORCERS"]
     INSPECTORS = data["INSPECTORS"]
-    Skynet_logs = Config.Skynet_logs
-    Skynet_approved_logs = Config.Skynet_approved_logs
+    SKYNET_LOGS = Config.SKYNET_LOGS
+    Skynet_approved_logs = Config.SKYNET_APPROVED_LOGS
     GBAN_MSG_LOGS = Config.GBAN_MSG_LOGS
     BOT_TOKEN = Config.BOT_TOKEN
 
