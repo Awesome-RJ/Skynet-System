@@ -43,7 +43,7 @@ else:
     MONGO_DB_URL = Config.MONGO_DB_URL
     with open(os.path.join(os.getcwd(), "Skynet_System\\elevated_users.json"), "r") as f:
         data = json.load(f)
-    SKYNET = data["Skynet"]
+    SKYNET = data["SKYNET"]
     ENFORCERS = data["ENFORCERS"]
     INSPECTORS = data["INSPECTORS"]
     Skynet_logs = Config.Skynet_logs
@@ -51,7 +51,7 @@ else:
     GBAN_MSG_LOGS = Config.GBAN_MSG_LOGS
     BOT_TOKEN = Config.BOT_TOKEN
 
-INSPECTORS.extend(Skynet)
+INSPECTORS.extend(SKYNET)
 ENFORCERS.extend(INSPECTORS)
 
 session = aiohttp.ClientSession()
