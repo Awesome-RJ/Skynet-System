@@ -1,5 +1,5 @@
 on_string = """
-Connection successful! 
+Connection successful!
 Welcome {Enforcer} {name}
 You are a valid user!
 """
@@ -9,7 +9,7 @@ You are a valid user!
 scan_request_string = """
 $SCAN
 Cymatic Scan request!
-**Enforcer:** {enforcer} 
+**Enforcer:** {enforcer}
 **User scanned:** {spammer}
 **Reason:** `{reason}`
 **Scan Source:** {chat}
@@ -27,8 +27,8 @@ $FORCED
 reject_string = """
 $REJECTED
 **Crime Coefficient:** `Under 100`
-Not a target for enforcement action. 
-The trigger will be locked.
+Not a target for enforcement action.
+The trigger of Dominator will be locked.
 """
 
 proof_string = """

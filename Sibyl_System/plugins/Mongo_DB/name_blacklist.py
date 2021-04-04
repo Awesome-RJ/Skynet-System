@@ -1,6 +1,6 @@
-from Skynet_System import MONGO_CLIENT
+from Sibyl_System import MONGO_CLIENT
 
-db = MONGO_CLIENT["Skynet"]["Main"]
+db = MONGO_CLIENT["Sibyl"]["Main"]
 
 
 async def update_wlc_blacklist(word, add=False):

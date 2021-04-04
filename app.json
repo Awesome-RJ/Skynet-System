@@ -1,0 +1,67 @@
+{
+   "name": "Sybil",
+   "description": "hmm no time",
+   "repository": "https://github.com/darkking007-bit/SibylSystem ",
+   "buildpacks": [
+    {
+      "url": "heroku/python"
+    }     
+  ],      
+   "env": {
+      "API_ID_KEY": {
+         "description": "id",
+         "value": ""
+      },
+      "API_HASH_KEY": {
+         "description": "app hash.",
+         "value": ""
+      },
+      "STRING_SESSION": {
+         "description": "session ",
+         "value": ""
+      },    
+      "HEROKU_API_KEY": {
+         "description": "get from heroku settings.",
+         "value": ""
+      },      
+      "CHARLIE": {
+         "description": "readme.",
+         "value": ""
+      },
+      "ADMIRALS": {
+         "description": "see readme",
+         "value": ""
+      },
+      "Conquerors": {
+         "description": "readme plz",
+         "value": ""
+      },
+      "MONGO_DB_URL": {
+         "description": "mongodb.com go get it.. see channel infotel autofilter bot tute",
+         "value": ""
+      },
+      "Sibyl_logs": {
+         "description": "radme.",
+         "value": ""
+      },      
+      "Sibyl_Approved_Logs": {
+         "description": "readme",
+         "value": ""
+      },
+      "GBAN_MSG_LOGS": {
+         "description": "readme",
+         "value": ""
+      },
+      "BOT_TOKEN": {
+         "description": "get from bot.f",
+         "value": ""
+      },
+      "ENV": {
+         "description": "Nope. Don't change",
+         "required": false,
+         "value": "ANYTHING"
+      }
+
+   }
+}
+

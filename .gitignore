@@ -1,16 +1,7 @@
 # Config files, logs and stuff
-SaitamaRobot/modules/helper_funcs/temp.txt
-SaitamaRobot/elevated_users.json
-SaitamaRobot/config.py
-SaitamaRobot/config.ini
 log.txt
-kangsticker.png
-updates.txt
 
 # Session files
-SaitamaRobot/*.session
-SaitamaRobot/*.session-journal
-saitama.session-journal
 *.session
 
 # Byte-compiled / optimized / DLL files
@@ -153,3 +144,8 @@ dmypy.json
 
 # random logs file
 .txt
+
+
+Sibyl_System/elevated_users.json
+config.py
+*.sqlite3

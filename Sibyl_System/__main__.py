@@ -1,12 +1,12 @@
-from Skynet_System import (
+from Sibyl_System import (
     System,
     system_cmd,
     make_collections,
     INSPECTORS,
     ENFORCERS,
-    Skynet_logs,
+    Sibyl_logs,
 )
-from Skynet_System.strings import on_string
+from Sibyl_System.strings import on_string
 import logging
 import importlib
 import asyncio
@@ -16,7 +16,7 @@ logging.basicConfig(
     format="[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s", level=logging.WARNING
 )
 
-from Skynet_System.plugins import to_load
+from Sibyl_System.plugins import to_load
 
 HELP = {}
 IMPORTED = {}
@@ -24,7 +24,7 @@ FAILED_TO_LOAD = {}
 
 for load in to_load:
     try:
-        imported = importlib.import_module("Skynet_System.plugins." + load)
+        imported = importlib.import_module("Sibyl_System.plugins." + load)
         if not hasattr(imported, "__plugin_name__"):
             imported.__plugin_name__ = imported.__name__
 
@@ -67,7 +67,7 @@ async def status(event):
     await msg.edit(on_string.format(Enforcer=user_status, name=sender.first_name))
 
 
-@System.on(system_cmd(pattern="Skynet stats"))
+@System.on(system_cmd(pattern="sibyl stats"))
 async def stats(event):
     msg = f"Processed {System.processed} messages since last restart."
     msg += f"\n{len(ENFORCERS)} Enforcers & {len(INSPECTORS)} Inspectors"
@@ -110,9 +110,9 @@ async def main():
         msg = "Few plugins failed to load:"
         for plugin in FAILED_TO_LOAD:
             msg += f"\n**{plugin}**\n\n`{FAILED_TO_LOAD[plugin]}`"
-        await System.send_message(Skynet_logs, msg)
+        await System.send_message(Sibyl_logs, msg)
     else:
-        await System.send_message(Skynet_logs, " Skynet! System in command!")
+        await System.send_message(Sibyl_logs, "I'm up!")
     await System.run_until_disconnected()
 
 

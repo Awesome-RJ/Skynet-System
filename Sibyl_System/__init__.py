@@ -6,6 +6,8 @@ from motor import motor_asyncio
 import aiohttp
 import json
 from datetime import datetime
+
+import traceback
 import logging
 import os
 import re
@@ -41,7 +43,7 @@ else:
     API_HASH_KEY = Config.API_HASH
     STRING_SESSION = Config.STRING_SESSION
     MONGO_DB_URL = Config.MONGO_DB_URL
-    with open(os.path.join(os.getcwd(), "Sibyl_System/elevated_users.json"), "r") as f:
+    with open(os.path.join(os.getcwd(), "Sibyl_System\\elevated_users.json"), "r") as f:
         data = json.load(f)
     SIBYL = data["SIBYL"]
     ENFORCERS = data["ENFORCERS"]
@@ -60,7 +62,11 @@ MONGO_CLIENT = motor_asyncio.AsyncIOMotorClient(MONGO_DB_URL)
 
 from .client_class import SibylClient
 
-System = SibylClient(StringSession(STRING_SESSION), API_ID_KEY, API_HASH_KEY)
+try:
+    System = SibylClient(StringSession(STRING_SESSION), API_ID_KEY, API_HASH_KEY)
+except:
+    print(traceback.format_exc())
+    exit(1)
 
 collection = MONGO_CLIENT["Sibyl"]["Main"]
 
@@ -109,7 +115,7 @@ def system_cmd(
     **args
 ):
     if pattern and allow_slash:
-        args["pattern"] = re.compile(r"[\?\.!/]" + pattern)
+        args["pattern"] = re.compile(r"[\?\.!/](" + pattern + r")(?!@)")
     else:
         args["pattern"] = re.compile(r"[\?\.!]" + pattern)
     if allow_sibyl and allow_enforcer:

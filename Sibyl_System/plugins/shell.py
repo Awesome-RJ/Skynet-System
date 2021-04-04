@@ -1,9 +1,9 @@
-from Skynet_System import system_cmd, System
+from Sibyl_System import system_cmd, System
 import asyncio
 import io
 
 
-@System.on(system_cmd("(term|terminal|sh|shell) "))
+@System.on(system_cmd("(term|terminal|shell) "))
 async def shell(event):
     if event.fwd_from:
         return

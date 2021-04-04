@@ -3,10 +3,10 @@ from telethon.tl.functions.channels import LeaveChannelRequest
 from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest
 
-from Skynet_System.plugins.Mongo_DB.tree import add_inspector, add_enforcers, get_data
-from Skynet_System import ENFORCERS, INSPECTORS, Skynet, session
-from Skynet_System import System, system_cmd
-from Skynet_System import Skynet_logs
+from Sibyl_System.plugins.Mongo_DB.tree import add_inspector, add_enforcers, get_data
+from Sibyl_System import ENFORCERS, INSPECTORS, SIBYL, session
+from Sibyl_System import System, system_cmd
+from Sibyl_System import Sibyl_logs
 
 from datetime import datetime
 from urllib.parse import urlparse, urlunparse
@@ -16,7 +16,7 @@ import re
 import json
 
 try:
-    from Skynet_System import HEROKU_API_KEY, HEROKU_APP_NAME
+    from Sibyl_System import HEROKU_API_KEY, HEROKU_APP_NAME
 
     heroku_conn = heroku3.from_key(HEROKU_API_KEY)
     app = heroku_conn.app(HEROKU_APP_NAME)
@@ -25,7 +25,7 @@ try:
 except BaseException:
     HEROKU = False
 
-json_file = os.path.join(os.getcwd(), "Skynet_System\\elevated_users.json")
+json_file = os.path.join(os.getcwd(), "Sibyl_System\\elevated_users.json")
 
 
 @System.on(system_cmd(pattern=r"addenf", allow_inspectors=True))
@@ -56,12 +56,12 @@ async def addenf(event) -> None:
         with open(json_file, "w") as file:
             json.dump(data, file, indent=4)
         await System.send_message(event.chat_id, "Added to enforcers, Restarting...")
-        if not event.from_id.user_id in Skynet:
+        if not event.from_id.user_id in SIBYL:
             await add_enforcers(event.from_id.user_id, u_id)
         await System.disconnect()
         os.execl(sys.executable, sys.executable, *sys.argv)
         quit()
-    if not event.from_id.user_id in Skynet:
+    if not event.from_id.user_id in SIBYL:
         await add_enforcers(event.from_id.user_id, u_id)
     await System.send_message(
         event.chat_id, f"Added [{u_id}](tg://user?id={u_id}) to Enforcers"
@@ -134,15 +134,15 @@ async def join(event) -> None:
         await System(ImportChatInviteRequest(private.group(5)))
         await System.send_message(event.chat_id, "Joined chat!")
         await System.send_message(
-            Skynet_logs,
-            f"{(await event.get_sender()).first_name} made Skynet join {private.group(5)}",
+            Sibyl_logs,
+            f"{(await event.get_sender()).first_name} made Sibyl join {private.group(5)}",
         )
     else:
         await System(JoinChannelRequest(link))
         await System.send_message(event.chat_id, "Joined chat!")
         await System.send_message(
-            Skynet_logs,
-            f"{(await event.get_sender()).first_name} made Skynet join {link}",
+            Sibyl_logs,
+            f"{(await event.get_sender()).first_name} made Sibyl join {link}",
         )
 
 
@@ -281,11 +281,11 @@ async def leave(event) -> None:
     if c_id:
         await System(LeaveChannelRequest(int(c_id.group(0))))
         await System.send_message(
-            event.chat_id, f"Skynet has left chat with id[-{c_id.group(1)}]"
+            event.chat_id, f"Sibyl has left chat with id[-{c_id.group(1)}]"
         )
     else:
         await System(LeaveChannelRequest(link))
-        await System.send_message(event.chat_id, f"Skynet has left chat[{link}]")
+        await System.send_message(event.chat_id, f"Sibyl has left chat[{link}]")
 
 
 @System.on(system_cmd(pattern=r"get_redirect ", allow_inspectors=True))
