@@ -1,7 +1,10 @@
 on_string = """
-Connection successful!
-Welcome {Enforcer} {name}
-You are a valid user!
+Connected to Skynet System! 
+Welcome to Skynet System • Server Core
+⭐⭐⭐⭐⭐
+RANK:{Enforcer}
+NAME : {name}
+You are an authorized user!
 """
 
 # Make sure not to change these too much
