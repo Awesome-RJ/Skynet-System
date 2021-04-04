@@ -149,3 +149,4 @@ dmypy.json
 Sibyl_System/elevated_users.json
 config.py
 *.sqlite3
+Sibyl_System/simple_config.py
