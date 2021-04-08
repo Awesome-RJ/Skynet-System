@@ -132,7 +132,7 @@ async def scan(event, flags):
         if event.chat.username
         else f"t.me/c/{event.chat.id}/{event.message.id}"
     )
-    await event.reply("Connecting to Skynet for a cymatic scan.")
+    await event.reply("Connecting to Sibyl for a cymatic scan.")
     if req_proof and req_user:
         await replied.forward_to(Sibyl_logs)
         await System.gban(
@@ -276,6 +276,7 @@ async def approve(event, flags):
                             f"User is a target for enforcement action.\nEnforcement Mode: Lethal Eliminator\nYour reason was overwritten with: `{reason}`",
                             reply_to=int(orig.group(2)),
                         )
+                        return
                     await System.send_message(
                         orig.group(1),
                         "User is a target for enforcement action.\nEnforcement Mode: Lethal Eliminator",
@@ -317,15 +318,13 @@ async def reject(event):
 
 help_plus = """
 Here is the help for **Main**:
-
 Commands:
-    `scan` - Reply to a message WITH reason to send a request to Inspectors/Skynet for judgement
-    `approve` - Approve a scan request (Only works in Skynet System Base)
+    `scan` - Reply to a message WITH reason to send a request to Inspectors/Sibyl for judgement
+    `approve` - Approve a scan request (Only works in Sibyl System Base)
     `revert` or `revive` or `restore` - Ungban ID
     `qproof` - Get quick proof from database for given user id
     `proof` - Get message from proof id which is at the end of gban msg
     `reject` - Reject a scan request
-
 Flags:
     scan:
         `-f` - Force approve a scan. Using this with scan will auto approve it (Inspectors+)
@@ -335,7 +334,6 @@ Flags:
         `-or` - Overwrite reason. Use this to change scan reason.
     reject:
         `-r` - Reply to the scan message with reject reason.
-
 All commands can be used with ! or / or ? or .
 """
 
