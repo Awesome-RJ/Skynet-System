@@ -8,7 +8,7 @@
 [![Stars](https://img.shields.io/github/stars/AnimeKaizoku/SibylSystem?style=social)](https://github.com/AnimeKaizoku/SibylSystem "Sibyl System")
 [![Maintained](https://img.shields.io/badge/Maintained-Yes-brightgreen)](https://github.com/AnimeKaizoku/SibylSystem "Sibyl System")
 
-# Charlie System
+# Skynet System
 > A proactive judgement system for group chats.
 
 [![Sibyl System](https://vignette.wikia.nocookie.net/psychopass/images/7/72/Sibyl_System.png/revision/latest?cb=20141029202159 "Sibyl System")](https://github.com/AnimeKaizoku/SibylSystem "Sibyl System")
