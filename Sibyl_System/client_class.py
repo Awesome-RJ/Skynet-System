@@ -1,13 +1,10 @@
 from telethon import TelegramClient
-from functools import wraps
 from .strings import (
     scan_approved_string,
     bot_gban_string,
     proof_string,
     forced_scan_string,
 )
-from .utils import FlagParser, ParseError
-
 from Sibyl_System import (
     Sibyl_logs,
     Sibyl_approved_logs,
@@ -30,45 +27,11 @@ class SibylClient(TelegramClient):
         self.bot = None
         self.processing = 0
         self.processed = 0
-        self.groups = {}
         if BOT_TOKEN:
             self.bot = TelegramClient(
                 "SibylSystem", api_id=API_ID_KEY, api_hash=API_HASH_KEY
             ).start(bot_token=BOT_TOKEN)
         super().__init__(*args, **kwargs)
-
-    def command(self, e, group, help="", flags={}, allow_unknown=False):
-        def _on(func):
-            if not group in self.groups:
-                self.groups[group] = []
-            self.groups[group].append(func.__name__)
-            parser = FlagParser(flags, help)
-            @wraps(func)
-            async def flags_decorator(event):
-                split = event.text.split(" ", 1)
-                if len(split) == 1:
-                    return await func(event, None)
-                try:
-                    if allow_unknown:
-                        flags, unknown = parser.parse(split[1], known=True)
-                        if unknown:
-                            if any([x for x in unknown if '-' in x]):
-                                parser.parse(split[1]) # Trigger the error because unknown args are not allowed to have - in them.
-                    else:
-                        flags = parser.parse(split[1])
-                except ParseError as exce:
-                    error = exce.message
-                    help = parser.get_help()
-                    await event.reply(f"{error}\n{help}")
-                    return
-                if flags.help:
-                    await event.reply(f"{parser.get_help()}")
-                    return
-                return await func(event, flags)
-            self.add_event_handler(flags_decorator, e)
-            return flags_decorator
-
-        return _on
 
     async def gban(
         self,
