@@ -31,6 +31,6 @@ help_plus = """ Here is Help for **Whois** -
 `whois` - get data of the user
 **Notes:**
 `/` `?` `.` `!` are supported prefixes.
-**Example:** `/addmng` or `?addmng` or `.addmng`
+**Example:** `/addenf` or `?addenf` or `.addenf`
 """
 __plugin_name__ = "whois"
