@@ -1,6 +1,7 @@
-telethon==1.16.4
-aiohttp>=2.2.5
+telethon
+aiohttp
 motor 
 heroku3
-Pillow>=4.2.0
+pillow
+pymongo
 dnspython
