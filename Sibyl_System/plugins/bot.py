@@ -13,17 +13,15 @@ import asyncio
 data = []
 DATA_LOCK = asyncio.Lock()
 
-
 def can_ban(event):
     status = False
     if event.chat.admin_rights:
         status = event.chat.admin_rights.ban_users
     return status
 
-
 async def make_proof(user: Union[str, int]):
-    if isinstance(user, str) and user.startswith("#"):
-        data = await get_gban_by_proofid(int(user.strip("#")))
+    if isinstance(user, str) and user.startswith('#'):
+        data = await get_gban_by_proofid(int(user.strip('#')))
     else:
         data = await get_gban(int(user))
     if not data:
@@ -46,12 +44,11 @@ async def make_proof(user: Union[str, int]):
 async def sup(event):
     await event.reply("sup?")
 
-
 @System.bot.on(events.NewMessage(pattern="[/!]alertmode"))
 async def setalertmode(event):
     if event.is_private:
         return
-    split = event.text.split(" ")
+    split = event.text.split(' ')
     if len(split) == 1:
         c = await db.get_chat(event.chat_id)
         if not c:
@@ -60,16 +57,13 @@ async def setalertmode(event):
         await event.reply(f"Current mode: `{c['alertmode']}`")
         return
     mode = split[1].lower()
-    if mode not in ["ban", "silent-ban", "warn"]:
-        await event.reply(
-            "Invalid mode given, Read /help for list of all available modes!"
-        )
+    if mode not in ['ban', 'silent-ban', 'warn']:
+        await event.reply("Invalid mode given, Read /help for list of all available modes!")
         return
-    if await db.change_settings(event.chat_id, True, mode):
+    if (await db.change_settings(event.chat_id, True, mode)):
         await event.reply(f"Changed mode to: `{mode}`")
     else:
         await event.reply("Failed to change mode")
-
 
 @System.bot.on(events.NewMessage(pattern="[/!]help"))
 async def help(event):
@@ -215,7 +209,6 @@ async def inline_handler(event):
         )
     await event.answer([result])
 
-
 @System.bot.on(events.ChatAction())
 async def check_user(event):
     if not event.user_joined and not event.user_added:
@@ -227,46 +220,36 @@ async def check_user(event):
         return
     if event.user_added:
         if user.is_self:
-            if await db.add_chat(event.chat_id):
-                msg = (
-                    "Thanks for adding me here!\n"
-                    "Here are your current settings:\n"
-                    "Alert Mode: Warn"
-                )
+            if (await db.add_chat(event.chat_id)):
+                msg = "Thanks for adding me here!\n"\
+                      "Here are your current settings:\n"\
+                      "Alert Mode: Warn"
                 await event.respond(msg)
-            else:  # Chat already exists in database
+            else: # Chat already exists in database
                 return
         else:
             u = await get_gban(user.id)
             chat = await db.get_chat(event.chat_id)
             if not u:
                 return
-            if chat["alertmode"] == "silent-ban":
+            if chat['alertmode'] == 'silent-ban':
                 if can_ban(event):
                     try:
-                        msg = await event.client.edit_permissions(
-                            event.chat_id, user.id, view_messages=False
-                        )
-                        await event.delete()
-                        if msg:
-                            await msg.delete()
+                       msg = await event.client.edit_permissions(event.chat_id, user.id, view_messages=False)
+                       await event.delete()
+                       if msg:
+                          await msg.delete()
                     except:
-                        pass
+                       pass
                 else:
                     await db.change_settings(event.chat_id, True, "warn")
-                    await event.respond(
-                        "I can't ban users here, Changed mode to `warn`"
-                    )
+                    await event.respond("I can't ban users here, Changed mode to `warn`")
                 return
-            msg = (
-                f"{user.first_name}'s Crime-Coeffecient is over 300!\n"
-                f"**Reason:** `{u['reason']}`\n"
-            )
-            if chat["alertmode"] == "ban":
+            msg = f"{user.first_name}'s Crime-Coeffecient is over 300!\n"\
+                  f"**Reason:** `{u['reason']}`\n"
+            if chat['alertmode'] == 'ban':
                 if can_ban(event):
-                    await event.client.edit_permissions(
-                        event.chat_id, user.id, view_messages=False
-                    )
+                    await event.client.edit_permissions(event.chat_id, user.id, view_messages=False)
                     msg += "Banning them from here."
                 else:
                     msg += "I can't ban users here, Changed mode to `warn`"
@@ -279,33 +262,28 @@ async def check_user(event):
         chat = await db.get_chat(event.chat_id)
         if not u:
             return
-        if chat["alertmode"] == "silent-ban":
+        if chat['alertmode'] == 'silent-ban':
             if can_ban(event):
                 try:
-                    msg = await event.client.edit_permissions(
-                        event.chat_id, user.id, view_messages=False
-                    )
-                    await event.delete()
-                    if msg:
-                        await msg.delete()
+                   msg = await event.client.edit_permissions(event.chat_id, user.id, view_messages=False)
+                   await event.delete()
+                   if msg:
+                      await msg.delete()
                 except:
-                    pass
+                   pass
             else:
                 await db.change_settings(event.chat_id, True, "warn")
                 await event.respond("I can't ban users here, Changed mode to `warn`")
             return
-        msg = (
-            f"{user.first_name}'s Crime-Coeffecient is over 300!\n"
-            f"**Reason:** `{u['reason']}`\n"
-        )
-        if chat["alertmode"] == "ban":
+        msg = f"{user.first_name}'s Crime-Coeffecient is over 300!\n"\
+              f"**Reason:** `{u['reason']}`\n"
+        if chat['alertmode'] == 'ban':
             if can_ban(event):
-                await event.client.edit_permissions(
-                    event.chat_id, user.id, view_messages=False
-                )
+                await event.client.edit_permissions(event.chat_id, user.id, view_messages=False)
                 msg += "Banning them from here."
             else:
                 msg += "I can't ban users here, Changed mode to `warn`"
                 await db.change_settings(event.chat_id, True, "warn")
-
+                
         await event.respond(msg)
+        
