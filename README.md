@@ -1,32 +1,28 @@
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/darkking007-bit/SibylSystem.git)
-
-
-
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/441b48966e9f4b58a643d7c4cee8ba66)](https://app.codacy.com/gh/AnimeKaizoku/SibylSystem?utm_source=github.com&utm_medium=referral&utm_content=AnimeKaizoku/SibylSystem&utm_campaign=Badge_Grade_Dashboard)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![Repo Size](https://img.shields.io/github/repo-size/AnimeKaizoku/SibylSystem)](https://github.com/AnimeKaizoku/SibylSystem "Sibyl System")
 [![Stars](https://img.shields.io/github/stars/AnimeKaizoku/SibylSystem?style=social)](https://github.com/AnimeKaizoku/SibylSystem "Sibyl System")
 [![Maintained](https://img.shields.io/badge/Maintained-Yes-brightgreen)](https://github.com/AnimeKaizoku/SibylSystem "Sibyl System")
 
-# Skynet System
+# Sibyl System
 > A proactive judgement system for group chats.
 
 [![Sibyl System](https://vignette.wikia.nocookie.net/psychopass/images/7/72/Sibyl_System.png/revision/latest?cb=20141029202159 "Sibyl System")](https://github.com/AnimeKaizoku/SibylSystem "Sibyl System")
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
-## A Telethon Userbot to make gbanning easy
+## A Telethon Userbot to make handling spam easer
 
 ## Config
 Here stuff you need to put in config.py or Environment variables:
 - ` API_ID_KEY` Get from [my.telegram.org/apps](https://my.telegram.org/apps)
 - ` API_HASH_KEY` Get from [my.telegram.org/apps](https://my.telegram.org/apps)
 - `STRING_SESSION`:  You can get this by doing `python3 generatestringsession.py` on Linux and Mac, If on windows just python will work
-- ` SIBYL `: Users who approve gbans, manage blacklist etc.
+- ` SIBYL `: Users who approve gbans, manage blacklist etc
 - ` ENFORCERS `: Users who send gban request
-- ` Sibyl_logs `: In this group all scan request come
-- ` Sibyl_approved_logs `: When approved it sends a message there
-- ` GBAN_MSG_LOGS `:Where to gban user, Set to None and it will send /gban in Sibyl_logs
-- Start bot using `python3 -m Sibyl_System`
+- ` Sibyl_logs `: In this group all scan requests will land (Super group)
+- ` Sibyl_approved_logs `: When approved it sends a message there (channel)
+- ` GBAN_MSG_LOGS `: Where to gban user, Set to None and it will send /gban in Sibyl_logs (Super group)
+- Start bot using `python3 -m Sibyl_System` on linux or `py -m -m Sibyl_System` for windows
 ------------
 
 ## Purpose and schematics
@@ -46,8 +42,8 @@ The base of operations of Sibyl are Beneath the NONA Tower and are only accessib
 
 ### Commands list
 You can check help using -
-
-    *help <plugin_name> *- Get help about plugin, Send it without plugin name to get list of all plugins.
+    *?help main* - prints out basic help in the group, inspectors or higher only
+    *help <plugin_name> *- Get help about plugin, Send it without plugin name to get list of all plugins
 
 ------------
 
@@ -83,10 +79,10 @@ Sibyl is under active development and some future plans include
 - How else would I get reason, message etc? ( I know about split but that'd make the code hard for me to read)
 
 >Why such noob code?
-- Cuz I'm a noob?
+- Cuz I'm a noob.
 
 >Why not getting list of all module instead of manually putting module in to_load?
-- I don't want people from uniborg or ftg or other userbots to put there plugins (those weird animation ones or useless ones) in Sibyl System
+- I don't want people from uniborg or ftg or other userbots to put their plugins (those weird animation ones or useless ones) in Sibyl System
 
 #### Credits
 

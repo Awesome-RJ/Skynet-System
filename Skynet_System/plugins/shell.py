@@ -1,4 +1,4 @@
-from Sibyl_System import system_cmd, System
+from Skynet_System import system_cmd, System
 import asyncio
 import io
 

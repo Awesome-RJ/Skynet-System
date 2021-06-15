@@ -1,19 +1,17 @@
-from Sibyl_System import MONGO_CLIENT
+from Skynet_System import MONGO_CLIENT
 from typing import Optional, Dict, Union
 from datetime import datetime
 
-db = MONGO_CLIENT["Sibyl"]["Main"]
+db = MONGO_CLIENT["skynet"]["Main"]
 
 
 async def get_gban(user: int) -> Optional[Dict[str, Union[str, int]]]:
     json = await db.find_one({"user": user})
     return json
 
-
 async def get_gban_by_proofid(proofid: int) -> Optional[Dict[str, Union[str, int]]]:
     json = await db.find_one({"proof_id": proofid})
     return json
-
 
 async def delete_gban(user: int) -> bool:
     gban = await get_gban(user)
@@ -21,7 +19,6 @@ async def delete_gban(user: int) -> bool:
         await db.delete_one(gban)
         return True
     return False
-
 
 async def update_gban(
     victim: int,

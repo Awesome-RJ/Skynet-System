@@ -1,1 +1,1 @@
-worker: python3 -m Sibyl_System
+worker: python3 -m Skynet_System

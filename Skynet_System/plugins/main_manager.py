@@ -1,12 +1,12 @@
-from Sibyl_System import Sibyl_logs, ENFORCERS, SIBYL, INSPECTORS
-from Sibyl_System.strings import (
+from Skynet_System import Skynet_logs, ENFORCERS, SKYNET, INSPECTORS
+from Skynet_System.strings import (
     scan_request_string,
     reject_string,
     proof_string,
     forced_scan_string,
 )
-from Sibyl_System import System, system_cmd
-from Sibyl_System.utils import seprate_flags, Flag
+from Skynet_System import System, system_cmd
+from Skynet_System.utils import seprate_flags
 
 import re
 
@@ -26,47 +26,16 @@ def get_data_from_url(url: str) -> tuple:
     return (match.group(4), match.group(5))
 
 
-@System.command(
-    e=system_cmd(pattern=r"scan ", allow_enforcer=True),
-    group="main",
-    help="Reply to a message WITH reason to send a request to Inspect",
-    flags=[
-        Flag(
-            "-f",
-            "Force approve a scan. Using this with scan will auto approve it",
-            "store_true"
-        ),
-        Flag(
-            "-u",
-            "Grab message from url. Use this with message link to scan the user the message link redirects to.",
-        ),
-        Flag(
-            "-o",
-            "Original Sender. Using this will gban orignal sender instead of forwarder.",
-            "store_true",
-        ),
-        Flag(
-            "-r",
-            "Reason to scan message with.",
-            nargs="*",
-            default=None
-        )
-    ],
-    allow_unknown=True
-)
-async def scan(event, flags):
+@System.on(system_cmd(pattern=r"scan ", allow_enforcer=True))
+async def scan(event):
     replied = await event.get_reply_message()
-    if flags.r:
-        reason = " ".join(flags.r)
-    else:
-        split = event.text.split(' ', 1)
-        if len(split) == 1:
-            return
-        reason = seprate_flags(split[1]).strip()
-        if not reason:
-            return
-    if flags.u:
-        url = flags.u
+    flags, reason = seprate_flags(event.text)
+    if len(reason.split(" ", 1)) == 1:
+        return
+    split = reason.strip().split(" ", 1)
+    reason = reason.strip().split(" ", 1)[1].strip()
+    if "u" in flags.keys():
+        url = reason
         data = get_data_from_url(url)
         if not data:
             await event.reply("Invalid url")
@@ -86,23 +55,23 @@ async def scan(event, flags):
         if message.from_id.user_id in ENFORCERS:
             return
         msg = await System.send_message(
-            Sibyl_logs,
+            Skynet_logs,
             scan_request_string.format(
                 enforcer=executor,
                 spammer=message.from_id.user_id,
                 chat=f"https://t.me/{data[0]}/{data[1]}",
                 message=message.text,
-                reason=reason,
+                reason=reason.split(" ", 1)[1].strip(),
             ),
         )
         return
     if not event.is_reply:
         return
-    if flags.o:
+    if "o" in flags.keys():
         if replied.fwd_from:
             reply = replied.fwd_from
             target = reply.from_id.user_id
-            if reply.from_id.user_id in ENFORCERS or reply.from_id.user_id in SIBYL:
+            if reply.from_id.user_id in ENFORCERS or reply.from_id.user_id in SKYNET:
                 return
             if not reply.from_id.user_id:
                 await event.reply("Cannot get user ID.")
@@ -110,9 +79,7 @@ async def scan(event, flags):
             if reply.from_name:
                 sender = f"[{reply.from_name}](tg://user?id={reply.from_id.user_id})"
             else:
-                sender = (
-                    f"[{reply.from_id.user_id}](tg://user?id={reply.from_id.user_id})"
-                )
+                sender = f"[{reply.from_id.user_id}](tg://user?id={reply.from_id.user_id})"
     else:
         if replied.sender.id in ENFORCERS:
             return
@@ -120,27 +87,27 @@ async def scan(event, flags):
         target = replied.sender.id
     executer = await event.get_sender()
     req_proof = req_user = False
-    if flags.f and executer.id in INSPECTORS:
+    if "f" in flags.keys() and executer.id in INSPECTORS:
         approve = True
     else:
         approve = False
     if replied.media:
-        await replied.forward_to(Sibyl_logs)
+        await replied.forward_to(Skynet_logs)
     executor = f"[{executer.first_name}](tg://user?id={executer.id})"
     chat = (
         f"t.me/{event.chat.username}/{event.message.id}"
         if event.chat.username
         else f"t.me/c/{event.chat.id}/{event.message.id}"
     )
-    await event.reply("Connecting to Skynet for a cymatic scan.")
+    await event.reply("Connection Skynet System For •Global - SCAN -")
     if req_proof and req_user:
-        await replied.forward_to(Sibyl_logs)
+        await replied.forward_to(Skynet_logs)
         await System.gban(
             executer.id, req_user, reason, msg.id, executer, message=replied.text
         )
     if not approve:
         msg = await System.send_message(
-            Sibyl_logs,
+            Skynet_logs,
             scan_request_string.format(
                 enforcer=executor,
                 spammer=sender,
@@ -151,7 +118,7 @@ async def scan(event, flags):
         )
         return
     msg = await System.send_message(
-        Sibyl_logs,
+        Skynet_logs,
         forced_scan_string.format(
             ins=executor, spammer=sender, chat=chat, message=replied.text, reason=reason
         ),
@@ -159,6 +126,7 @@ async def scan(event, flags):
     await System.gban(
         executer.id, target, reason, msg.id, executer, message=replied.text
     )
+
 
 @System.on(system_cmd(pattern=r"re(vive|vert|store) ", allow_inspectors=True))
 async def revive(event):
@@ -168,27 +136,21 @@ async def revive(event):
         return
     a = await event.reply("Reverting bans..")
     if not user_id.isnumeric():
-        await a.edit("Invalid id")
+        await a.edit('Invalid id')
         return
-    if not (
-        await System.ungban(int(user_id), f" By //{(await event.get_sender()).id}")
-    ):
-        await a.edit("User is not gbanned.")
+    if not (await System.ungban(int(user_id), f" GBAN BY- //{(await event.get_sender()).id}")):
+        await a.edit('User is not GBAN.')
         return
-    await a.edit("Revert request sent to Skynet. This might take 10minutes or so.")
+    await a.edit("Revert request sent to • Skynet System This might take 10 minutes or so.")
 
 
-@System.on(system_cmd(pattern=r"sibyl logs"))
+@System.on(system_cmd(pattern=r"Skynet logs"))
 async def logs(event):
     await System.send_file(event.chat_id, "log.txt")
 
-@System.command(
-    e = system_cmd(pattern=r"approve", allow_inspectors=True, force_reply=True),
-    group="main",
-    help="Approve a scan request.",
-    flags=[Flag("-or", "Overwrite reason", nargs="*")]
-)
-async def approve(event, flags):
+
+@System.on(system_cmd(pattern=r"approve", allow_inspectors=True, force_reply=True))
+async def approve(event):
     replied = await event.get_reply_message()
     match = re.match(r"\$SCAN", replied.text)
     auto_match = re.search(r"\$AUTO(SCAN)?", replied.text)
@@ -219,24 +181,23 @@ async def approve(event, flags):
                 bot=bot,
                 message=message,
             )
-            return
-    overwritten = False
+            return "OwO"
     if match:
         reply = replied.sender.id
         sender = await event.get_sender()
+        flags, reason = seprate_flags(event.text)
         # checks to not gban the Gbanner and find who is who
         if reply == me.id:
             list = re.findall(r"tg://user\?id=(\d+)", replied.text)
-            if getattr(flags, "or", None):
-                reason = " ".join(getattr(flags, "or"))
+            if "or" in flags.keys():
                 await replied.edit(
                     re.sub(
                         "(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)",
-                        f'**Scan Reason:** `{reason}`',
+                        f'**Scan Reason:** {reason.split(" ", 1)[1].strip()}',
                         replied.text,
                     )
                 )
-                overwritten = True
+                reason = reason.split(" ", 1)[1].strip()
             else:
                 reason = re.search(
                     r"(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)", replied.text
@@ -248,7 +209,7 @@ async def approve(event, flags):
             else:
                 id1 = list[0]
                 id2 = re.findall(r"(\d+)", replied.text)[1]
-            if id1 in ENFORCERS or SIBYL:
+            if id1 in ENFORCERS or SKYNET:
                 enforcer = id1
                 scam = id2
             else:
@@ -269,21 +230,11 @@ async def approve(event, flags):
             )
             orig = re.search(r"t.me/(\w+)/(\d+)", replied.text)
             if orig:
-                try:
-                    if overwritten:
-                        await System.send_message(
-                            orig.group(1),
-                            f"User is a target for enforcement action.\nEnforcement Mode: Lethal Eliminator\nYour reason was overwritten with: `{reason}`",
-                            reply_to=int(orig.group(2)),
-                        )
-                        return
-                    await System.send_message(
-                        orig.group(1),
-                        "User is a target for enforcement action.\nEnforcement Mode: Lethal Eliminator",
-                        reply_to=int(orig.group(2)),
-                    )
-                except:
-                    await event.reply('Failed to notify enforcer about scan being accepted.')
+                await System.send_message(
+                    orig.group(1),
+                    "**• Skynet System Detected Crime on -SCAN- USER.**\n\n•Action: **-Force GBAN**",
+                    reply_to=int(orig.group(2)),
+                )
 
 
 @System.on(system_cmd(pattern=r"reject", allow_inspectors=True, force_reply=True))
@@ -297,7 +248,7 @@ async def reject(event):
         if match:
             # print('Matched OmU')
             id = replied.id
-            await System.edit_message(Sibyl_logs, id, reject_string)
+            await System.edit_message(Skynet_logs, id, reject_string)
     orig = re.search(r"t.me/(\w+)/(\d+)", replied.text)
     _orig = re.search(r"t.me/c/(\w+)/(\d+)", replied.text)
     flags, reason = seprate_flags(event.text)
@@ -318,13 +269,15 @@ async def reject(event):
 
 help_plus = """
 Here is the help for **Main**:
+
 Commands:
     `scan` - Reply to a message WITH reason to send a request to Inspectors/Skynet for judgement
-    `approve` - Approve a scan request (Only works in Sibyl System Base)
+    `approve` - Approve a scan request (Only works in Skynet System Base)
     `revert` or `revive` or `restore` - Ungban ID
     `qproof` - Get quick proof from database for given user id
     `proof` - Get message from proof id which is at the end of gban msg
     `reject` - Reject a scan request
+
 Flags:
     scan:
         `-f` - Force approve a scan. Using this with scan will auto approve it (Inspectors+)
@@ -334,6 +287,7 @@ Flags:
         `-or` - Overwrite reason. Use this to change scan reason.
     reject:
         `-r` - Reply to the scan message with reject reason.
+
 All commands can be used with ! or / or ? or .
 """
 

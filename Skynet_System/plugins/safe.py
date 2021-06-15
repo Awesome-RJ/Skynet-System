@@ -1,10 +1,10 @@
-from Sibyl_System import System, system_cmd
+from Skynet_System import System, system_cmd
 import os
 import sys
 import subprocess
 
 
-@System.on(system_cmd(pattern=r"sibyl gitpull"))
+@System.on(system_cmd(pattern=r"skynet gitpull"))
 async def gitpull(event):
     subprocess.Popen("git pull", stdout=subprocess.PIPE, shell=True)
     await event.reply("Git pulled probably.")
@@ -12,7 +12,7 @@ async def gitpull(event):
     os.execv("start.bat", sys.argv)
 
 
-@System.on(system_cmd(pattern=r"sibyl restart"))
+@System.on(system_cmd(pattern=r"skynet restart"))
 async def reboot(event):
     if event.fwd_from:
         return
@@ -22,7 +22,7 @@ async def reboot(event):
     sys.exit()
 
 
-@System.on(system_cmd(pattern=r"sibyl shutdown"))
+@System.on(system_cmd(pattern=r"skynet shutdown"))
 async def shutdown(event):
     if event.fwd_from:
         return

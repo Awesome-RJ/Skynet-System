@@ -1,5 +1,5 @@
 from telethon.tl.functions.users import GetFullUserRequest
-from Sibyl_System import System, system_cmd
+from Skynet_System import System, system_cmd
 
 
 @System.on(system_cmd(pattern=r"whois"))
