@@ -30,24 +30,24 @@ if ENV:
     INSPECTORS = list(int(x) for x in os.environ.get("INSPECTORS", "").split())
     ENFORCERS = list(int(x) for x in os.environ.get("ENFORCERS", "").split())
     MONGO_DB_URL = os.environ.get("MONGO_DB_URL")
-    SKYNET_logs = (os.environ.get("SKYNET_logs"))
-    SKYNET_approved_logs = (os.environ.get("SKYNET_Approved_Logs"))
+    Skynet_logs = (os.environ.get("Skynet_logs"))
+    Skynet_approved_logs = (os.environ.get("Skynet_Approved_Logs"))
     GBAN_MSG_LOGS = int(os.environ.get("GBAN_MSG_LOGS"))
     BOT_TOKEN = os.environ.get("BOT_TOKEN")
 else:
-    import SKYNET_System.config as Config
+    import Skynet_System.config as Config
 
     API_ID_KEY = Config.API_ID
     API_HASH_KEY = Config.API_HASH
     STRING_SESSION = Config.STRING_SESSION
     MONGO_DB_URL = Config.MONGO_DB_URL
-    with open(os.path.join(os.getcwd(), "SKYNET_System/elevated_users.json"), "r") as f:
+    with open(os.path.join(os.getcwd(), "Skynet_System/elevated_users.json"), "r") as f:
         data = json.load(f)
     SKYNET = data["SKYNET"]
     ENFORCERS = data["ENFORCERS"]
     INSPECTORS = data["INSPECTORS"]
-    SKYNET_logs = Config.SKYNET_logs
-    SKYNET_approved_logs = Config.SKYNET_approved_logs
+    Skynet_logs = Config.Skynet_logs
+    Skynet_approved_logs = Config.Skynet_approved_logs
     GBAN_MSG_LOGS = Config.GBAN_MSG_LOGS
     BOT_TOKEN = Config.BOT_TOKEN
 
