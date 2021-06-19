@@ -8,7 +8,6 @@
 > A proactive judgement system for group chats.
 
 [![Skynet System](https://telegra.ph/file/35e701017db1b6d92a72e.jpg "Skynet System")](https://github.com/Awesome-RJ/Skynet-System "Skynet System")
-[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
 ## A Telethon Userbot to make handling spam easer
 
@@ -73,4 +72,8 @@ Skynet is under active development and some future plans include
 
 #### Credits
 
+- [Rajkumar](https://github.com/Awesome-RJ/Skynet-System)
+- [DragSama](https://github.com/sitischu)
+- [AnimeKaizoku](https://github.com/AnimeKaizoku)
+- [DRaj](https://github.com/draj48)
 - [Simon](https://github.com/sitischu) for the ID image!
