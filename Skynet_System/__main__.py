@@ -112,7 +112,7 @@ async def main():
             msg += f"\n**{plugin}**\n\n`{FAILED_TO_LOAD[plugin]}`"
         await System.send_message(Skynet_logs, msg)
     else:
-        await System.send_message(Skynet_logs, "I Here To G-Ban YOu")
+        await System.send_message(Skynet_logs, "I Am Here To G-Ban You")
     await System.run_until_disconnected()
 
 
