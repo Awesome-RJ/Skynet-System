@@ -1,4 +1,4 @@
-from Skynet_System import Skynet_logs, ENFORCERS, SKYNET, INSPECTORS
+from Skynet_System import Skynet_logs, ENFORCERS, Skynet, INSPECTORS
 from Skynet_System.strings import (
     scan_request_string,
     reject_string,
@@ -71,7 +71,7 @@ async def scan(event):
         if replied.fwd_from:
             reply = replied.fwd_from
             target = reply.from_id.user_id
-            if reply.from_id.user_id in ENFORCERS or reply.from_id.user_id in SKYNET:
+            if reply.from_id.user_id in ENFORCERS or reply.from_id.user_id in Skynet:
                 return
             if not reply.from_id.user_id:
                 await event.reply("Cannot get user ID.")
@@ -99,7 +99,7 @@ async def scan(event):
         if event.chat.username
         else f"t.me/c/{event.chat.id}/{event.message.id}"
     )
-    await event.reply("Connection Skynet System For •Global - SCAN -")
+    await event.reply("Connecting to Skynet for a cymatic scan.")
     if req_proof and req_user:
         await replied.forward_to(Skynet_logs)
         await System.gban(
@@ -135,13 +135,8 @@ async def revive(event):
     except IndexError:
         return
     a = await event.reply("Reverting bans..")
-    if not user_id.isnumeric():
-        await a.edit('Invalid id')
-        return
-    if not (await System.ungban(int(user_id), f" GBAN BY- //{(await event.get_sender()).id}")):
-        await a.edit('User is not GBAN.')
-        return
-    await a.edit("Revert request sent to • Skynet System This might take 10 minutes or so.")
+    await System.ungban(user_id, f" By //{(await event.get_sender()).id}")
+    await a.edit("Revert request sent to Skynet. This might take 10minutes or so.")
 
 
 @System.on(system_cmd(pattern=r"Skynet logs"))
@@ -209,7 +204,7 @@ async def approve(event):
             else:
                 id1 = list[0]
                 id2 = re.findall(r"(\d+)", replied.text)[1]
-            if id1 in ENFORCERS or SKYNET:
+            if id1 in ENFORCERS or Skynet:
                 enforcer = id1
                 scam = id2
             else:
@@ -232,7 +227,7 @@ async def approve(event):
             if orig:
                 await System.send_message(
                     orig.group(1),
-                    "**• Skynet System Detected Crime on -SCAN- USER.**\n\n•Action: **-Force GBAN**",
+                    "User is a target for enforcement action.\nEnforcement Mode: Lethal Eliminator",
                     reply_to=int(orig.group(2)),
                 )
 

@@ -3,5 +3,4 @@ aiohttp
 motor 
 heroku3
 pillow
-pymongo
 dnspython

@@ -1,4 +1,4 @@
-from Skynet_System import System, SKYNET, ENFORCERS, Skynet_logs, system_cmd
+from Skynet_System import System, Skynet, ENFORCERS, Skynet_logs, system_cmd
 import re
 import Skynet_System.plugins.Mongo_DB.message_blacklist as db
 import Skynet_System.plugins.Mongo_DB.name_blacklist as wlc_collection
@@ -81,7 +81,7 @@ async def listbl(event):
 @System.bot.on(events.NewMessage(incoming=True))
 async def auto_gban_request(event):
     System.processing += 1
-    if event.sender_id in ENFORCERS or event.sender_id in SKYNET:
+    if event.from_id.user_id in ENFORCERS or event.from_id.user_id in Skynet:
         return
     if event.chat_id == Skynet_logs:
         return
@@ -110,7 +110,7 @@ async def auto_gban_request(event):
 async def auto_wlc_gban(event):
     System.processing += 1
     user = await event.get_user()
-    if user.id in ENFORCERS or user.id in SKYNET:
+    if user.id in ENFORCERS or user.id in Skynet:
         return
     words = await wlc_collection.get_wlc_bl()
     if words:

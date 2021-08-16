@@ -4,7 +4,7 @@ from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest
 
 from Skynet_System.plugins.Mongo_DB.tree import add_inspector, add_enforcers, get_data
-from Skynet_System import ENFORCERS, INSPECTORS, SKYNET, session
+from Skynet_System import ENFORCERS, INSPECTORS, Skynet, session
 from Skynet_System import System, system_cmd
 from Skynet_System import Skynet_logs
 
@@ -25,7 +25,7 @@ try:
 except BaseException:
     HEROKU = False
 
-json_file = os.path.join(os.getcwd(), "Skynet_System/elevated_users.json")
+json_file = os.path.join(os.getcwd(), "Skynet_System\\elevated_users.json")
 
 
 @System.on(system_cmd(pattern=r"addenf", allow_inspectors=True))
@@ -56,12 +56,12 @@ async def addenf(event) -> None:
         with open(json_file, "w") as file:
             json.dump(data, file, indent=4)
         await System.send_message(event.chat_id, "Added to enforcers, Restarting...")
-        if not event.from_id.user_id in SKYNET:
+        if not event.from_id.user_id in Skynet:
             await add_enforcers(event.from_id.user_id, u_id)
         await System.disconnect()
         os.execl(sys.executable, sys.executable, *sys.argv)
         quit()
-    if not event.from_id.user_id in SKYNET:
+    if not event.from_id.user_id in Skynet:
         await add_enforcers(event.from_id.user_id, u_id)
     await System.send_message(
         event.chat_id, f"Added [{u_id}](tg://user?id={u_id}) to Enforcers"
