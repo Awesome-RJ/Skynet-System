@@ -9,4 +9,5 @@ to_load = [
     "id_maker",
     "shell",
     "bot",
+    "bancodes",
 ]
