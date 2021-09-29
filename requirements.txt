@@ -4,3 +4,4 @@ motor
 heroku3
 pillow
 dnspython
+pymongo
