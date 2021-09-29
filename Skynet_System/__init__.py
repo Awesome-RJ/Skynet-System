@@ -26,9 +26,9 @@ if ENV:
     HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME")
     RAW_Skynet = os.environ.get("Skynet", "")
     RAW_ENFORCERS = os.environ.get("ENFORCERS", "")
-    Skynet = list(int(x) for x in os.environ.get("Skynet", "").split())
-    INSPECTORS = list(int(x) for x in os.environ.get("INSPECTORS", "").split())
-    ENFORCERS = list(int(x) for x in os.environ.get("ENFORCERS", "").split())
+    Skynet = [int(x) for x in os.environ.get("Skynet", "").split()]
+    INSPECTORS = [int(x) for x in os.environ.get("INSPECTORS", "").split()]
+    ENFORCERS = [int(x) for x in os.environ.get("ENFORCERS", "").split()]
     MONGO_DB_URL = os.environ.get("MONGO_DB_URL")
     Skynet_logs = int(os.environ.get("Skynet_logs"))
     Skynet_approved_logs = int(os.environ.get("Skynet_approved_logs"))
