@@ -8,12 +8,11 @@ from telethon import events
 async def extract(flag, event):
     if flag:
         return re.escape(flag.group(1))
-    else:
-        try:
-            text = event.text.split(" ", 1)[1]
-            return text
-        except BaseException:
-            return False
+    try:
+         text = event.text.split(" ", 1)[1]
+         return text
+     except BaseException:
+         return False
 
 
 @System.on(system_cmd(pattern=r"addbl ", allow_slash=False))
