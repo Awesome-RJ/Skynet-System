@@ -11,7 +11,7 @@ from Skynet_System import System, system_cmd
 from Skynet_System.utils import seprate_flags, Flag
 
 
-url_regex = re.compile(r"(http(s)?://)?t.me/(c/)?(\w+)/(\d+)")
+url_regex = re.compile("(http(s)?://)?t.me/(c/)?(\w+)/(\d+)")
 
 
 def get_data_from_url(url: str) -> tuple:
@@ -201,7 +201,7 @@ async def approve(event, flags):
             ).group(2)
             try:
                 message = re.search(
-                    r"(\*\*)?Message:(\*\*)? (.*)", replied.text, re.DOTALL
+                    "(\*\*)?Message:(\*\*)? (.*)", replied.text, re.DOTALL
                 ).group(3)
             except:
                 message = None
@@ -209,7 +209,7 @@ async def approve(event, flags):
                 bot = (await System.get_entity(id)).bot
             except:
                 bot = False
-            reason = re.search(r"\*\*Reason:\*\* (.*)", replied.text).group(1)
+            reason = re.search("\*\*Reason:\*\* (.*)", replied.text).group(1)
             await System.gban(
                 enforcer=me.id,
                 target=id,
@@ -260,7 +260,7 @@ async def approve(event, flags):
                 bot = False
             try:
                 message = re.search(
-                    r"(\*\*)?Target Message:(\*\*)? (.*)", replied.text, re.DOTALL
+                    "(\*\*)?Target Message:(\*\*)? (.*)", replied.text, re.DOTALL
                 ).group(3)
             except:
                 message = None
