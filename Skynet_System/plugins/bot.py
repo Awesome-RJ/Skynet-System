@@ -60,7 +60,7 @@ async def setalertmode(event):
     if mode not in ['ban', 'silent-ban', 'warn']:
         await event.reply("Invalid mode given, Read /help for list of all available modes!")
         return
-    if (await db.change_settings(event.chat_id, True, mode)):
+    if await db.change_settings(event.chat_id, True, mode):
         await event.reply(f"Changed mode to: `{mode}`")
     else:
         await event.reply("Failed to change mode")
@@ -220,7 +220,7 @@ async def check_user(event):
         return
     if event.user_added:
         if user.is_self:
-            if (await db.add_chat(event.chat_id)):
+            if await db.add_chat(event.chat_id):
                 msg = "Thanks for adding me here!\n"\
                       "Here are your current settings:\n"\
                       "Alert Mode: Warn"
