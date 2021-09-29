@@ -139,7 +139,7 @@ async def revive(event):
         await a.edit('Invalid id')
         return
     if not (await System.ungban(int(user_id), f" By //{(await event.get_sender()).id}")):
-    await a.edit("Revert request sent to Skynet. This might take 10minutes or so.")
+#    await a.edit("Revert request sent to Skynet. This might take 10minutes or so.")
 
 
 @System.on(system_cmd(pattern=r"Skynet logs"))
