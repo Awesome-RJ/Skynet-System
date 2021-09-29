@@ -101,5 +101,5 @@ class SkynetClient(TelegramClient):
         )
         await self.send_message(
             logs, f"/unfban [{target}](tg://user?id={target}) {reason}"
-        return True
         )
+        return True
