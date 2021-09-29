@@ -53,7 +53,6 @@ class SkynetClient(TelegramClient):
                     if allow_unknown:
                         flags, unknown = parser.parse(split[1], known=True)
                         if unknown:
-                    #        if any(x for x in unknown if '-' in x):
                             if any([x for x in unknown if '-' in x]):
                                 parser.parse(split[1]) # Trigger the error because unknown args are not allowed to have - in them.
                     else:
