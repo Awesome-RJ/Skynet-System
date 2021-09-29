@@ -135,7 +135,10 @@ async def revive(event):
     except IndexError:
         return
     a = await event.reply("Reverting bans..")
-    await System.ungban(user_id, f" By //{(await event.get_sender()).id}")
+    if not user_id.isnumeric():
+        await a.edit('Invalid id')
+        return
+    if not (await System.ungban(int(user_id), f" By //{(await event.get_sender()).id}")):
     await a.edit("Revert request sent to Skynet. This might take 10minutes or so.")
 
 
