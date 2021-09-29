@@ -1,4 +1,5 @@
 from telethon import TelegramClient
+from telethon.sessions import MemorySession
 from functools import wraps
 from .strings import (
     scan_approved_string,
@@ -19,8 +20,8 @@ from Skynet_System import (
 from Skynet_System.plugins.Mongo_DB.gbans import update_gban, delete_gban
 
 
-class SibylClient(TelegramClient):
-    """SibylClient - Subclass of Telegram Client."""
+class SkynetClient(TelegramClient):
+    """SkynetClient - Subclass of Telegram Client."""
 
     def __init__(self, *args, **kwargs):
         """Declare stuff."""
@@ -33,7 +34,7 @@ class SibylClient(TelegramClient):
         self.groups = {}
         if BOT_TOKEN:
             self.bot = TelegramClient(
-                "SibylSystem", api_id=API_ID_KEY, api_hash=API_HASH_KEY
+                MemorySession(), api_id=API_ID_KEY, api_hash=API_HASH_KEY
             ).start(bot_token=BOT_TOKEN)
         super().__init__(*args, **kwargs)
 
