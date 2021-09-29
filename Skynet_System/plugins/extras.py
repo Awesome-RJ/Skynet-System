@@ -1,3 +1,9 @@
+import sys
+import heroku3
+import os
+import re
+import json
+
 from telethon.utils import resolve_invite_link
 from telethon.tl.functions.channels import LeaveChannelRequest
 from telethon.tl.functions.channels import JoinChannelRequest
@@ -10,10 +16,6 @@ from Skynet_System import Skynet_logs
 
 from datetime import datetime
 from urllib.parse import urlparse, urlunparse
-import heroku3
-import os
-import re
-import json
 
 try:
     from Skynet_System import HEROKU_API_KEY, HEROKU_APP_NAME
@@ -60,7 +62,7 @@ async def addenf(event) -> None:
             await add_enforcers(event.from_id.user_id, u_id)
         await System.disconnect()
         os.execl(sys.executable, sys.executable, *sys.argv)
-        quit()
+        sys.exit()
     if not event.from_id.user_id in Skynet:
         await add_enforcers(event.from_id.user_id, u_id)
     await System.send_message(
@@ -103,7 +105,7 @@ async def rmenf(event) -> None:
         )
         await System.disconnect()
         os.execl(sys.executable, sys.executable, *sys.argv)
-        quit()
+        sys.exit()
     await System.send_message(
         event.chat_id, f"Removed [{u_id}](tg://user?id={u_id}) from Enforcers"
     )
@@ -176,7 +178,7 @@ async def addins(event) -> None:
         await add_inspector(event.from_id.user_id, u_id)
         await System.disconnect()
         os.execl(sys.executable, sys.executable, *sys.argv)
-        quit()
+        sys.exit()
     await add_inspector(event.from_id.user_id, u_id)
     await System.send_message(
         event.chat_id, f"Added [{u_id}](tg://user?id={u_id}) to INSPECTORS"
@@ -217,7 +219,7 @@ async def rmins(event) -> None:
         )
         await System.disconnect()
         os.execl(sys.executable, sys.executable, *sys.argv)
-        quit()
+        sys.exit()
     await System.send_message(
         event.chat_id,
         f"Removed Inspector status of [{u_id}](tg://user?id={u_id}), Now that user is a mere enforcers.",
