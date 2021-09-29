@@ -70,7 +70,7 @@ async def scan(event):
     if "o" in flags.keys():
         if replied.fwd_from:
             reply = replied.fwd_from
-            target = reply.from_id.user_id
+            target = reply.sender_id
             if reply.from_id.user_id in ENFORCERS or reply.from_id.user_id in Skynet:
                 return
             if not reply.from_id.user_id:
