@@ -1,8 +1,10 @@
 import sys
-from Skynet_System import system_cmd, System
-from io import StringIO
+import ast
 import traceback
 import inspect
+
+from Skynet_System import system_cmd, System
+from io import StringIO
 
 # Thanks to stackoverflow for existing https://stackoverflow.com/questions/3906232/python-get-the-print-output-in-an-exec-statement
 
@@ -47,7 +49,7 @@ async def run_eval(event):
     cmd = event.text.split(" ", 2)
     cmd = cmd[2] if len(cmd) > 2 else ""
     try:
-        evaluation = eval(cmd)
+        evaluation = ast.literal_eval(cmd)
         if inspect.isawaitable(evaluation):
             evaluation = await evaluation
     except (Exception) as e:
