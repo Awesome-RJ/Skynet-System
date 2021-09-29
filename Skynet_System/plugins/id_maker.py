@@ -3,7 +3,7 @@ from PIL import Image, ImageDraw, ImageFont
 import os
 
 
-@System.on(system_cmd(pattern=r"getid"))
+@System.on(system_cmd(pattern=r"get_id"))
 async def image_maker(event) -> None:
     replied_user = await event.get_reply_message()
     # Download profile photo
