@@ -26,7 +26,7 @@ def get_data_from_url(url: str) -> tuple:
     return (match.group(4), match.group(5))
 
 
-@System.on(
+@System.command(
     e=system_cmd(pattern=r"scan ", allow_enforcer=True),
     group="main",
     help="Reply to a message WITH reason to send a request to Inspect",
@@ -182,7 +182,7 @@ async def revive(event):
 async def logs(event):
     await System.send_file(event.chat_id, "log.txt")
 
-@System.on(
+@System.command(
     e = system_cmd(pattern=r"approve", allow_inspectors=True, force_reply=True),
     group="main",
     help="Approve a scan request.",
