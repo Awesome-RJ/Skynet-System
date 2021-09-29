@@ -142,7 +142,7 @@ async def get(event):
         words = await wlc_collection.get_wlc_bl()
     else:
         return
-    which = re.match(".get (\d)x(\d+)", event.text)
+    which = re.match(r".get (\d)x(\d+)", event.text)
     if which:
         try:
             await event.reply(
