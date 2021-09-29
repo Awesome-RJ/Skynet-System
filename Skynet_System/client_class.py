@@ -94,7 +94,7 @@ class SkynetClient(TelegramClient):
             logs = self.gban_logs
         else:
             logs = self.log
-        if not (await delete_gban(target)):
+        if not await delete_gban(target):
             return False
         await self.send_message(
             logs, f"/ungban [{target}](tg://user?id={target}) {reason}"
