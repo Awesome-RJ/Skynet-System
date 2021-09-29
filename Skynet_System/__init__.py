@@ -1,14 +1,17 @@
 """Gets ENV vars or Config vars then calls class."""
 
-from telethon import events
-from telethon.sessions import StringSession
-from motor import motor_asyncio
-import aiohttp
-import json
-from datetime import datetime
+import traceback
 import logging
 import os
 import re
+import aiohttp
+import json
+
+from telethon import events
+from telethon.sessions import StringSession
+from motor import motor_asyncio
+from datetime import datetime
+
 
 
 logging.basicConfig(
@@ -60,7 +63,11 @@ MONGO_CLIENT = motor_asyncio.AsyncIOMotorClient(MONGO_DB_URL)
 
 from .client_class import SkynetClient
 
-System = SkynetClient(StringSession(STRING_SESSION), API_ID_KEY, API_HASH_KEY)
+try:
+    System = SkynetClient(StringSession(STRING_SESSION), API_ID_KEY, API_HASH_KEY)
+except:
+    print(traceback.format_exc())
+    exit(1)
 
 collection = MONGO_CLIENT["Skynet"]["Main"]
 
