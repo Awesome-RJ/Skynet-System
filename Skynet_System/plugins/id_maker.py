@@ -10,7 +10,7 @@ async def image_maker(event) -> None:
     await System.download_profile_photo(
         replied_user.from_id.user_id, file="user.png", download_big=True
     )
-    user_photo = Image.open("ID.png")
+    user_photo = Image.open("user.png")
     # open id photo
     id_template = Image.open("ID.png")
     # resize user photo to fit box in id template
