@@ -64,7 +64,7 @@ MONGO_CLIENT = motor_asyncio.AsyncIOMotorClient(MONGO_DB_URL)
 from .client_class import SkynetClient
 
 #try:
-    System = SkynetClient(StringSession(STRING_SESSION), API_ID_KEY, API_HASH_KEY)
+System = SkynetClient(StringSession(STRING_SESSION), API_ID_KEY, API_HASH_KEY)
 #except:
  #   print(traceback.format_exc())
   #  exit(1)
