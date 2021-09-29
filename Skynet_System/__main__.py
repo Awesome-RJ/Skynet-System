@@ -41,25 +41,23 @@ for load in to_load:
         print("------------------------------------")
 
 
-@System.on(system_cmd(pattern=r"status", allow_enforcer=True))
+@System.on(system_cmd(pattern=r"sysinfo", allow_enforcer=True))
 async def status(event):
-    msg = await event.reply("Portable Psychological Diagnosis and Suppression System.")
+    msg = await event.reply("Conecting to Syliviorus System Core.")
     time.sleep(1)
-    await msg.edit("Initialising ▫️◾️▫️")
+    await msg.edit("Initialising ■□□□□□")
     time.sleep(1)
-    await msg.edit("Initialising ◾️▫️◾️")
+    await msg.edit("Initialising ■■□□□□")
     time.sleep(1)
-    await msg.edit("Initialising ▫️◾️▫️")
+    await msg.edit("Initialising ■■■□□□")
     time.sleep(1)
-    await msg.edit("Initialising ◾️▫️◾️")
+    await msg.edit("Initialising ■■■■□□")
     time.sleep(1)
-    await msg.edit("Initialising ▫️◾️▫️")
+    await msg.edit("Initialising ■■■■■□")
     time.sleep(1)
-    await msg.edit("Initialising ◾️▫️◾️")
+    await msg.edit("Initialising ■■■■■■")
     time.sleep(1)
-    await msg.edit("Initialising ▫️◾️▫️")
-    time.sleep(1)
-    await msg.edit("Connection successful!")
+    await msg.edit("🔰🔰VERIFIED🔰🔰")
     time.sleep(2)
     sender = await event.get_sender()
     user_status = "Inspector" if sender.id in INSPECTORS else "Enforcer"
@@ -67,7 +65,7 @@ async def status(event):
     await msg.edit(on_string.format(Enforcer=user_status, name=sender.first_name))
 
 
-@System.on(system_cmd(pattern="Skynet stats"))
+@System.on(system_cmd(pattern="sibyl stats"))
 async def stats(event):
     msg = f"Processed {System.processed} messages since last restart."
     msg += f"\n{len(ENFORCERS)} Enforcers & {len(INSPECTORS)} Inspectors"
@@ -87,7 +85,7 @@ async def send_help(event):
         help_for = event.text.split(" ", 1)[1].lower()
     except IndexError:
         msg = "List of plugins with help text:\n"
-        for x in HELP:
+        for x in HELP.keys():
             msg += f"`{x.capitalize()}`\n"
         await event.reply(msg)
         return
@@ -112,7 +110,7 @@ async def main():
             msg += f"\n**{plugin}**\n\n`{FAILED_TO_LOAD[plugin]}`"
         await System.send_message(Skynet_logs, msg)
     else:
-        await System.send_message(Skynet_logs, " Skynet! System in command!")
+        await System.send_message(Skynet_logs, "I'm up!")
     await System.run_until_disconnected()
 
 
