@@ -10,6 +10,7 @@ async def shell(event):
     cmd = event.text.split(" ", 1)
     if len(cmd) == 1:
         return
+    else:
         cmd = cmd[1]
     async_process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
