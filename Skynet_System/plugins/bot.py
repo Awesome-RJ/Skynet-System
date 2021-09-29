@@ -132,7 +132,7 @@ async def callback_handler(event):
             await event.respond(msg)
             await message.edit(
                 re.sub(
-                    "(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)",
+                    r"(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)",
                     f"**Scan Reason:** {r.message}",
                     message.message,
                 )
