@@ -23,7 +23,7 @@ async def whois(event):
         return
     await System.send_message(
         event.chat_id,
-        f"Perma Link: [{data.user.first_name}](tg://user?id={data.user.id})\nUser ID: `{data.user.id}`\nAbout: {data.about}",
+        f"╒═══「<b> Appraisal results:</b> 」\n❂ First Name: `{data.user.last_name}`\n❂ Last Name: `{data.user.first_name}`\n❂ Username: @{data.user.username}\n❂ Userlink: [{data.user.first_name}](tg://user?id={data.user.id})\n❂ User ID: `{data.user.id}`\n❂ About: {data.about}",
     )
 
 
