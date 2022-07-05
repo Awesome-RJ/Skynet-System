@@ -41,7 +41,7 @@ async def run(event):
             f.write(final)
         await System.send_file(event.chat_id, "exec.txt")
         return
-    await event.reply(final + "`")
+    await event.reply(f"{final}`")
 
 
 @System.on(system_cmd(pattern=r"Skynet (ev|eva|eval|py)"))
