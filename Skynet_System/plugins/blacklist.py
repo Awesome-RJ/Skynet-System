@@ -8,12 +8,10 @@ from telethon import events
 async def extract(flag, event):
     if flag:
         return re.escape(flag.group(1))
-    else:
-        try:
-            text = event.text.split(" ", 1)[1]
-            return text
-        except BaseException:
-            return False
+    try:
+        return event.text.split(" ", 1)[1]
+    except BaseException:
+        return False
 
 
 @System.on(system_cmd(pattern=r"addbl ", allow_slash=False))
@@ -116,7 +114,7 @@ async def auto_wlc_gban(event):
     if words:
         text = user.first_name
         if user.last_name:
-            text = text + " " + user.last_name
+            text = f"{text} {user.last_name}"
         for word in words:
             pattern = r"( |^|[^\w])" + word + r"( |$|[^\w])"
             if re.search(pattern, text, flags=re.IGNORECASE):
@@ -142,12 +140,12 @@ async def get(event):
         words = await wlc_collection.get_wlc_bl()
     else:
         return
-    which = re.match(r".get (\d)x(\d+)", event.text)
-    if which:
+    if which := re.match(r".get (\d)x(\d+)", event.text):
         try:
             await event.reply(
-                f"Info from type {which.group(1)}\nPostion: {which.group(2)}\nMatches:{words[int(which.group(2))]}"
+                f"Info from type {which[1]}\nPostion: {which[2]}\nMatches:{words[int(which[2])]}"
             )
+
         except Exception:
             return
 

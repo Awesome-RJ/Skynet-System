@@ -7,15 +7,12 @@ async def update_wlc_blacklist(word, add=False):
     bl = await db.find_one({"_id": 2})
     current = bl["blacklisted_wlc"]
     upd, owo = {}, {}
-    if add:
-        if word in current:
-            return False
+    if add and word in current or not add and word not in current:
+        return False
+    elif add:
         current.append(word)
     else:
-        if word in current:
-            current.remove(word)
-        else:
-            return False
+        current.remove(word)
     upd["blacklisted_wlc"] = current
     owo["$set"] = upd
     await db.update_one(await db.find_one({"_id": 2}), owo)

@@ -24,11 +24,11 @@ FAILED_TO_LOAD = {}
 
 for load in to_load:
     try:
-        imported = importlib.import_module("Skynet_System.plugins." + load)
+        imported = importlib.import_module(f"Skynet_System.plugins.{load}")
         if not hasattr(imported, "__plugin_name__"):
             imported.__plugin_name__ = imported.__name__
 
-        if not imported.__plugin_name__.lower() in IMPORTED:
+        if imported.__plugin_name__.lower() not in IMPORTED:
             IMPORTED[imported.__plugin_name__.lower()] = imported
 
         if hasattr(imported, "help_plus") and imported.help_plus:
@@ -71,9 +71,7 @@ async def stats(event):
     msg += f"\n{len(ENFORCERS)} Enforcers & {len(INSPECTORS)} Inspectors"
     g = 0
     async for d in event.client.iter_dialogs(limit=None):
-        if d.is_channel and not d.entity.broadcast:
-            g += 1
-        elif d.is_group:
+        if d.is_channel and not d.entity.broadcast or d.is_group:
             g += 1
     msg += f"\nModerating {g} Groups"
     await event.reply(msg)
