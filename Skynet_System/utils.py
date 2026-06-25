@@ -48,5 +48,5 @@ class FlagParser:
         return string.getvalue()
 
 
-def seprate_flags(message: str) -> str:
+def separate_flags(message: str) -> str:
     return FLAG_REGEX.sub("", message)

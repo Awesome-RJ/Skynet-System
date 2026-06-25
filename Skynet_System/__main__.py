@@ -43,7 +43,7 @@ for load in to_load:
 
 @System.on(system_cmd(pattern=r"sxsinfo", allow_enforcer=True))
 async def status(event):
-    msg = await event.reply("Conecting to Skynet X System System Core.")
+    msg = await event.reply("Connecting to Skynet X System System Core.")
     await asyncio.sleep(1)
     await msg.edit("Initialising ■□□□□□")
     await asyncio.sleep(1)

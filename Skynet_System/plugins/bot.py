@@ -253,7 +253,7 @@ async def check_user(event):
                     await event.respond("I can't ban users here, Changed mode to `warn`")
                 return
             first_name = user.first_name or "User"
-            msg = f"{first_name}'s Crime-Coeffecient is over 300!\n"\
+            msg = f"{first_name}'s Crime-Coefficient is over 300!\n"\
                   f"**Reason:** `{u['reason']}`\n"
             if chat['alertmode'] == 'ban':
                 if can_ban(event):
@@ -286,7 +286,7 @@ async def check_user(event):
                 await event.respond("I can't ban users here, Changed mode to `warn`")
             return
         first_name = user.first_name or "User"
-        msg = f"{first_name}'s Crime-Coeffecient is over 300!\n"\
+        msg = f"{first_name}'s Crime-Coefficient is over 300!\n"\
               f"**Reason:** `{u['reason']}`\n"
         if chat['alertmode'] == 'ban':
             if can_ban(event):

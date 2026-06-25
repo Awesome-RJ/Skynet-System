@@ -8,7 +8,7 @@ from Skynet_System.strings import (
     forced_scan_string,
 )
 from Skynet_System import System, system_cmd
-from Skynet_System.utils import seprate_flags, Flag
+from Skynet_System.utils import separate_flags, Flag
 
 
 url_regex = re.compile("(http(s)?://)?t.me/(c/)?(\w+)/(\d+)")
@@ -42,7 +42,7 @@ def get_data_from_url(url: str) -> tuple:
         ),
         Flag(
             "-o",
-            "Original Sender. Using this will gban orignal sender instead of forwarder.",
+            "Original Sender. Using this will gban original sender instead of forwarder.",
             "store_true",
         ),
         Flag(
@@ -62,7 +62,7 @@ async def scan(event, flags):
         split = event.text.split(' ', 1)
         if len(split) == 1:
             return
-        reason = seprate_flags(split[1]).strip()
+        reason = separate_flags(split[1]).strip()
         if not reason:
             return
     if flags.u:
@@ -356,7 +356,7 @@ Flags:
     scan:
         `-f` - Force approve a scan. Using this with scan will auto approve it (Inspectors+)
         `-u` - Grab message from url. Use this with message link to scan the user the message link redirects to. (Enforcers+)
-        `-o` - Original Sender. Using this will gban orignal sender instead of forwarder (Enforcers+)
+        `-o` - Original Sender. Using this will gban original sender instead of forwarder (Enforcers+)
     approve:
         `-or` - Overwrite reason. Use this to change scan reason.
     reject:

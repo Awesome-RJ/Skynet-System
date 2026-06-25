@@ -47,7 +47,7 @@ async def addenf(event) -> None:
                 "I haven't interacted with that user! Meh, Will add them anyway"
             )
     if u_id in ENFORCERS:
-        await System.send_message(event.chat_id, "That person is already Enforcer!")
+        await System.send_message(event.chat_id, "That person is already an Enforcer!")
         return
     if HEROKU:
         config["ENFORCERS"] = os.environ.get("ENFORCERS") + " " + str(u_id)
@@ -83,7 +83,7 @@ async def rmenf(event) -> None:
         await event.reply("Invalid ID/Username!")
     u_id = int(u_id)
     if u_id not in ENFORCERS:
-        await System.send_message(event.chat_id, "Is that person even a Enforcer?")
+        await System.send_message(event.chat_id, "Is that person even an Enforcer?")
         return
     if HEROKU:
         str(u_id)
@@ -161,7 +161,7 @@ async def addins(event) -> None:
     try:
         u_id = (await System.get_entity(u_id)).id
     except BaseException:
-        await event.reply("Ivalid ID/Username!")
+        await event.reply("Invalid ID/Username!")
         return
     if u_id in INSPECTORS:
         await System.send_message(event.chat_id, "That person is already an Inspector!")
@@ -195,7 +195,7 @@ async def rmins(event) -> None:
     try:
         u_id = (await System.get_entity(u_id)).id
     except BaseException:
-        await event.reply("Ivalid ID/Username!")
+        await event.reply("Invalid ID/Username!")
     if u_id not in INSPECTORS:
         await System.send_message(event.chat_id, "Is that person even an Inspector?")
         return
@@ -222,7 +222,7 @@ async def rmins(event) -> None:
         sys.exit()
     await System.send_message(
         event.chat_id,
-        f"Removed Inspector status of [{u_id}](tg://user?id={u_id}), Now that user is a mere enforcers.",
+        f"Removed Inspector status of [{u_id}](tg://user?id={u_id}), Now that user is a mere enforcer.",
     )
 
 
