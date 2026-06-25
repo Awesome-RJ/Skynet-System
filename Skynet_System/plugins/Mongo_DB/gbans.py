@@ -14,11 +14,8 @@ async def get_gban_by_proofid(proofid: int) -> Optional[Dict[str, Union[str, int
     return json
 
 async def delete_gban(user: int) -> bool:
-    gban = await get_gban(user)
-    if gban:
-        await db.delete_one(gban)
-        return True
-    return False
+    res = await db.delete_one({"user": user})
+    return res.deleted_count > 0
 
 async def update_gban(
     victim: int,
@@ -38,7 +35,7 @@ async def update_gban(
         if message:
             gbans_dict["message"] = message
         gbans_dict["timestamp"] = datetime.timestamp(datetime.now())
-        await db.replace_one(await get_gban(victim), gbans_dict)
+        await db.replace_one({"_id": gbans_dict["_id"]}, gbans_dict)
     else:
         gbans_dict = {
             "user": victim,

@@ -79,52 +79,58 @@ async def listbl(event):
 @System.bot.on(events.NewMessage(incoming=True))
 async def auto_gban_request(event):
     System.processing += 1
-    if event.from_id.user_id in ENFORCERS or event.from_id.user_id in Skynet:
-        return
-    if event.chat_id == Skynet_logs:
-        return
-    text = event.text
-    words = await db.get_blacklist()
-    if words:
-        for word in words:
-            pattern = r"( |^|[^\w])" + word + r"( |$|[^\w])"
-            if re.search(pattern, text, flags=re.IGNORECASE):
-                c = words.index(word)
-                link = (
-                    f"t.me/{event.chat.username}/{event.message.id}"
-                    if event.chat.username
-                    else f"Occurred in Private Chat - {event.chat.title}"
-                )
-                logmsg = f"""$AUTOSCAN\n**Scanned user:** [{event.from_id.user_id}](tg://user?id={event.from_id.user_id})\n**Reason:** 0x{c}\n**Chat:** {link}\n**Hue Color:** Yellow-green\n**Message:** {event.text}"""
-                await System.send_message(Skynet_logs, logmsg)
-                System.processed += 1
-                System.processing -= 1
-                return
-    System.processed += 1
-    System.processing -= 1
+    try:
+        sender_id = event.sender_id
+        if not sender_id or sender_id in ENFORCERS or sender_id in Skynet:
+            return
+        if event.chat_id == Skynet_logs:
+            return
+        text = event.text or ""
+        words = await db.get_blacklist()
+        if words:
+            for word in words:
+                pattern = r"( |^|[^\w])" + word + r"( |$|[^\w])"
+                if re.search(pattern, text, flags=re.IGNORECASE):
+                    c = words.index(word)
+                    if event.chat and getattr(event.chat, 'username', None):
+                        link = f"t.me/{event.chat.username}/{event.id}"
+                    elif event.chat and hasattr(event.chat, 'title'):
+                        link = f"Occurred in Group Chat - {event.chat.title}"
+                    elif event.chat:
+                        first_name = getattr(event.chat, 'first_name', '') or ''
+                        last_name = getattr(event.chat, 'last_name', '') or ''
+                        link = f"Occurred in Private Chat - {first_name} {last_name}".strip()
+                    else:
+                        link = "Occurred in Private Chat"
+                    logmsg = f"""$AUTOSCAN\n**Scanned user:** [{sender_id}](tg://user?id={sender_id})\n**Reason:** 0x{c}\n**Chat:** {link}\n**Hue Color:** Yellow-green\n**Message:** {event.text}"""
+                    await System.send_message(Skynet_logs, logmsg)
+                    System.processed += 1
+                    return
+    finally:
+        System.processing -= 1
 
 
 @System.bot.on(events.ChatAction(func=lambda e: e.user_joined))
 async def auto_wlc_gban(event):
     System.processing += 1
-    user = await event.get_user()
-    if user.id in ENFORCERS or user.id in Skynet:
-        return
-    words = await wlc_collection.get_wlc_bl()
-    if words:
-        text = user.first_name
-        if user.last_name:
-            text = f"{text} {user.last_name}"
-        for word in words:
-            pattern = r"( |^|[^\w])" + word + r"( |$|[^\w])"
-            if re.search(pattern, text, flags=re.IGNORECASE):
-                c = words.index(word)
-                logmsg = f"""$AUTOSCAN\n**Scanned user:** [{user.id}](tg://user?id={user.id})\n**Reason:** 1x{c}\n**User joined and blacklisted string in name**\n**Matched String:** {word}\n"""
-                await System.send_message(Skynet_logs, logmsg)
-                System.processed += 1
-                System.processing -= 1
-                return
-        System.processed += 1
+    try:
+        user = await event.get_user()
+        if not user or user.id in ENFORCERS or user.id in Skynet:
+            return
+        words = await wlc_collection.get_wlc_bl()
+        if words:
+            text = user.first_name or ""
+            if user.last_name:
+                text = f"{text} {user.last_name}"
+            for word in words:
+                pattern = r"( |^|[^\w])" + word + r"( |$|[^\w])"
+                if re.search(pattern, text, flags=re.IGNORECASE):
+                    c = words.index(word)
+                    logmsg = f"""$AUTOSCAN\n**Scanned user:** [{user.id}](tg://user?id={user.id})\n**Reason:** 1x{c}\n**User joined and blacklisted string in name**\n**Matched String:** {word}\n"""
+                    await System.send_message(Skynet_logs, logmsg)
+                    System.processed += 1
+                    return
+    finally:
         System.processing -= 1
 
 

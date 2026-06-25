@@ -22,7 +22,7 @@ async def shell(event):
     if stdout.decode():
         msg += f"**Stdout:**\n`{stdout.decode()}`"
     if len(msg) > 4096:
-        with io.BytesIO(msg) as file:
+        with io.BytesIO(msg.encode('utf-8')) as file:
             file.name = "shell.txt"
             await System.send_file(
                 event.chat.id,

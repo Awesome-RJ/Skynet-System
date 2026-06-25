@@ -49,7 +49,8 @@ async def run_eval(event):
     cmd = event.text.split(" ", 2)
     cmd = cmd[2] if len(cmd) > 2 else ""
     try:
-        evaluation = ast.literal_eval(cmd)
+        # Using eval allows mathematical/Python expression evaluation (restricted to authorized owners)
+        evaluation = eval(cmd)
         if inspect.isawaitable(evaluation):
             evaluation = await evaluation
     except (Exception) as e:

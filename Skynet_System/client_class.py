@@ -35,8 +35,14 @@ class SkynetClient(TelegramClient):
         if BOT_TOKEN:
             self.bot = TelegramClient(
                 MemorySession(), api_id=API_ID_KEY, api_hash=API_HASH_KEY
-            ).start(bot_token=BOT_TOKEN)
+            )
         super().__init__(*args, **kwargs)
+
+    async def start(self, *args, **kwargs):
+        result = await super().start(*args, **kwargs)
+        if self.bot and not self.bot.is_connected():
+            await self.bot.start(bot_token=BOT_TOKEN)
+        return result
 
     def command(self, e, group, help="", flags={}, allow_unknown=False):
         def _on(func):

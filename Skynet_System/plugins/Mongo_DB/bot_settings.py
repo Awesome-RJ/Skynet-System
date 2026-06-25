@@ -21,5 +21,5 @@ async def change_settings(chat: int, alert: bool, alertmode: str) -> bool:
     copied_data = chat_data.copy()
     copied_data['alert'] = alert
     copied_data['alertmode'] = alertmode
-    await db.replace_one(chat_data, copied_data)
+    await db.replace_one({"_id": chat_data["_id"]}, copied_data)
     return True

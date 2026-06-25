@@ -17,7 +17,7 @@ async def add_inspector(Skynet: int, inspector: int) -> True:
         "addedby": Skynet,
         "timestamp": datetime.timestamp(datetime.now()),
     }
-    await db.replace_one(await get_data(), data)
+    await db.replace_one({"_id": 4}, data)
 
 
 async def add_enforcers(inspector: int, enforcer: int) -> True:
@@ -25,11 +25,11 @@ async def add_enforcers(inspector: int, enforcer: int) -> True:
     Skynet = data["standalone"][str(inspector)]["addedby"]
     if Skynet == 777000:
         s = data["data"][str(inspector)]
-        s[list(choice(s.keys()))].append([enforcer])
+        s[choice(list(s.keys()))].append([enforcer])
     else:
         data["data"][str(Skynet)][str(inspector)].append([enforcer])
     data["standalone"][str(enforcer)] = {
         "addedby": inspector,
         "timestamp": datetime.timestamp(datetime.now()),
     }
-    await db.replace_one(await get_data(), data)
+    await db.replace_one({"_id": 4}, data)

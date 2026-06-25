@@ -296,9 +296,12 @@ async def redirect(event) -> None:
     except BaseException:
         return
     of = urlunparse(urlparse(of, "https"))
-    async with session.get(of) as r:
-        url = r.url
-    await System.send_message(event.chat_id, f"URL: {url}")
+    try:
+        async with session.get(of, timeout=10) as r:
+            url = r.url
+        await System.send_message(event.chat_id, f"URL: {url}")
+    except Exception as e:
+        await System.send_message(event.chat_id, f"Failed to follow redirect: {e}")
 
 
 help_plus = """

@@ -2,14 +2,28 @@ from Skynet_System import System, system_cmd
 import os
 import sys
 import subprocess
+import asyncio
 
 
 @System.on(system_cmd(pattern=r"Skynet gitpull"))
 async def gitpull(event):
-    subprocess.Popen("git pull", stdout=subprocess.PIPE, shell=True)
-    await event.reply("Git pulled probably.")
+    await event.reply("Starting git pull...")
+    process = await asyncio.create_subprocess_shell(
+        "git pull", stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+    )
+    stdout, stderr = await process.communicate()
+    out = stdout.decode() or ""
+    err = stderr.decode() or ""
+    
+    reply_msg = "**Git Pull Output:**\n"
+    if out:
+        reply_msg += f"`{out}`\n"
+    if err:
+        reply_msg += f"**Errors:**\n`{err}`\n"
+    
+    await event.reply(reply_msg + "\nRestarting service...")
     os.system("restart.bat")
-    os.execv("start.bat", sys.argv)
+    sys.exit()
 
 
 @System.on(system_cmd(pattern=r"Skynet restart"))

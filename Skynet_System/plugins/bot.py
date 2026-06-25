@@ -24,14 +24,24 @@ async def make_proof(user: Union[str, int]):
     if not data:
         return False
     message = data.get("message") or ""
-    async with session.post(
-        "https://nekobin.com/api/documents", json={"content": message}
-    ) as r:
-        paste = f"https://nekobin.com/{(await r.json())['result']['key']}"
-    url = "https://del.dog/documents"
-    async with session.post(url, data=message.encode("UTF-8")) as f:
-        r = await f.json()
-        url = f"https://del.dog/{r['key']}"
+    paste = "Upload failed"
+    url = "Upload failed"
+    try:
+        async with session.post(
+            "https://nekobin.com/api/documents", json={"content": message}, timeout=10
+        ) as r:
+            res = await r.json()
+            if 'result' in res and 'key' in res['result']:
+                paste = f"https://nekobin.com/{res['result']['key']}"
+    except Exception as e:
+        logging.error(f"Nekobin upload error: {e}")
+    try:
+        async with session.post("https://del.dog/documents", data=message.encode("UTF-8"), timeout=10) as f:
+            res = await f.json()
+            if 'key' in res:
+                url = f"https://del.dog/{res['key']}"
+    except Exception as e:
+        logging.error(f"DelDog upload error: {e}")
     return proof_string.format(
         proof_id=data["proof_id"], reason=data["reason"], paste=paste, url=url
     )
@@ -224,9 +234,11 @@ async def check_user(event):
                   "Alert Mode: Warn"
         else:
             u = await get_gban(user.id)
-            chat = await db.get_chat(event.chat_id)
             if not u:
                 return
+            chat = await db.get_chat(event.chat_id)
+            if not chat:
+                chat = {'alert': True, 'alertmode': 'warn'}
             if chat['alertmode'] == 'silent-ban':
                 if can_ban(event):
                     try:
@@ -240,7 +252,8 @@ async def check_user(event):
                     await db.change_settings(event.chat_id, True, "warn")
                     await event.respond("I can't ban users here, Changed mode to `warn`")
                 return
-            msg = f"{user.first_name}'s Crime-Coeffecient is over 300!\n"\
+            first_name = user.first_name or "User"
+            msg = f"{first_name}'s Crime-Coeffecient is over 300!\n"\
                   f"**Reason:** `{u['reason']}`\n"
             if chat['alertmode'] == 'ban':
                 if can_ban(event):
@@ -254,9 +267,11 @@ async def check_user(event):
         return
     else:
         u = await get_gban(user.id)
-        chat = await db.get_chat(event.chat_id)
         if not u:
             return
+        chat = await db.get_chat(event.chat_id)
+        if not chat:
+            chat = {'alert': True, 'alertmode': 'warn'}
         if chat['alertmode'] == 'silent-ban':
             if can_ban(event):
                 try:
@@ -270,7 +285,8 @@ async def check_user(event):
                 await db.change_settings(event.chat_id, True, "warn")
                 await event.respond("I can't ban users here, Changed mode to `warn`")
             return
-        msg = f"{user.first_name}'s Crime-Coeffecient is over 300!\n"\
+        first_name = user.first_name or "User"
+        msg = f"{first_name}'s Crime-Coeffecient is over 300!\n"\
               f"**Reason:** `{u['reason']}`\n"
         if chat['alertmode'] == 'ban':
             if can_ban(event):

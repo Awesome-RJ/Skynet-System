@@ -15,7 +15,7 @@ async def update_wlc_blacklist(word, add=False):
         current.remove(word)
     upd["blacklisted_wlc"] = current
     owo["$set"] = upd
-    await db.update_one(await db.find_one({"_id": 2}), owo)
+    await db.update_one({"_id": 2}, owo)
     return True
 
 
